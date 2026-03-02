@@ -404,10 +404,9 @@ namespace WMS_WEBAPI.Services
                 if (string.IsNullOrWhiteSpace(connectionString))
                 {
                     _logger.LogWarning("GetBranchesAsync called but ErpConnection is not configured.");
-                    return ApiResponse<List<BranchDto>>.ErrorResult(
-                        _localizationService.GetLocalizedString("InternalServerError"),
-                        "ErpConnection is not configured.",
-                        StatusCodes.Status503ServiceUnavailable);
+                    return ApiResponse<List<BranchDto>>.SuccessResult(
+                        new List<BranchDto>(),
+                        _localizationService.GetLocalizedString("BranchesRetrievedSuccessfully"));
                 }
 
                 _logger.LogInformation(
@@ -444,10 +443,11 @@ namespace WMS_WEBAPI.Services
                     _logger.LogError(ex, "ERP branch list retrieval failed. BranchNo: {BranchNo}", branchNo);
                 }
 
-                return ApiResponse<List<BranchDto>>.ErrorResult(
-                    _localizationService.GetLocalizedString("BranchesRetrievalError"),
-                    ex.Message,
-                    StatusCodes.Status500InternalServerError);
+                // Login akışında şube listesi endpoint'i anonim ve daima erişilebilir olmalı.
+                // ERP tarafı geçici hata verirse 500 yerine boş liste dönerek giriş ekranını bloklamayız.
+                return ApiResponse<List<BranchDto>>.SuccessResult(
+                    new List<BranchDto>(),
+                    _localizationService.GetLocalizedString("BranchesRetrievalError"));
             }
         }
 

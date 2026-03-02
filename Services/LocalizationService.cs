@@ -7,16 +7,18 @@ namespace WMS_WEBAPI.Services
     public class LocalizationService : ILocalizationService
     {
         private readonly IStringLocalizerFactory _localizerFactory;
+        private readonly string _resourceAssemblyName;
 
         public LocalizationService(IStringLocalizerFactory localizerFactory)
         {
             _localizerFactory = localizerFactory;
+            _resourceAssemblyName = typeof(LocalizationService).Assembly.GetName().Name ?? "verii_wms_api";
         }
 
         public string GetLocalizedString(string key)
         {
             var currentCulture = CultureInfo.CurrentUICulture.Name;
-            var localizer = _localizerFactory.Create("Messages", "WMS_WEBAPI");
+            var localizer = _localizerFactory.Create("Messages", _resourceAssemblyName);
             
             // Mevcut culture'a göre localized string döndür
             using (new CultureScope(currentCulture))
@@ -28,7 +30,7 @@ namespace WMS_WEBAPI.Services
         public string GetLocalizedString(string key, params object[] arguments)
         {
             var currentCulture = CultureInfo.CurrentUICulture.Name;
-            var localizer = _localizerFactory.Create("Messages", "WMS_WEBAPI");
+            var localizer = _localizerFactory.Create("Messages", _resourceAssemblyName);
             
             // Mevcut culture'a göre localized string döndür
             using (new CultureScope(currentCulture))

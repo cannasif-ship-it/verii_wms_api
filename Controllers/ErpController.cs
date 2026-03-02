@@ -124,10 +124,11 @@ namespace WMS_WEBAPI.Controllers
 
         [HttpGet("health-check")]
         [AllowAnonymous]
-        public IActionResult HealthCheck()
+        public ActionResult<ApiResponse<object>> HealthCheck()
         {
             var healthResponse = new { Status = "Healthy", Timestamp = DateTime.UtcNow };
-            return StatusCode(200, healthResponse);
+            var result = ApiResponse<object>.SuccessResult(healthResponse, "Health check completed.");
+            return StatusCode(result.StatusCode, result);
         }
         
     }

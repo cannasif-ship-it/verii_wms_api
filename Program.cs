@@ -21,6 +21,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using WMS_WEBAPI.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -488,8 +489,12 @@ app.UseExceptionHandler(errApp =>
             }
         }
 
-        var message = ex?.Message ?? "An error occurred.";
-        var json = System.Text.Json.JsonSerializer.Serialize(new { error = "An error occurred.", message });
+        var response = ApiResponse<object>.ErrorResult(
+            "An error occurred.",
+            ex?.Message ?? "An error occurred.",
+            500,
+            ex?.Message);
+        var json = System.Text.Json.JsonSerializer.Serialize(response);
         await ctx.Response.WriteAsync(json);
     });
 });
