@@ -43,6 +43,41 @@ namespace WMS_WEBAPI.Services
             }
         }
 
+        public async Task<ApiResponse<PagedResponse<ShImportLineDto>>> GetPagedAsync(PagedRequest request)
+        {
+            try
+            {
+                request ??= new PagedRequest();
+                if (request.PageNumber < 1) request.PageNumber = 1;
+                if (request.PageSize < 1) request.PageSize = 20;
+
+                var query = _unitOfWork.ShImportLines.AsQueryable().Where(x => !x.IsDeleted);
+                query = query.ApplyFilters(request.Filters, request.FilterLogic);
+                bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
+                query = query.ApplySorting(request.SortBy ?? "Id", desc);
+
+                var totalCount = await query.CountAsync();
+                var entities = await query
+                    .ApplyPagination(request.PageNumber, request.PageSize)
+                    .ToListAsync();
+
+                var dtos = _mapper.Map<List<ShImportLineDto>>(entities);
+                var result = new PagedResponse<ShImportLineDto>(dtos, totalCount, request.PageNumber, request.PageSize);
+
+                return ApiResponse<PagedResponse<ShImportLineDto>>.SuccessResult(
+                    result,
+                    _localizationService.GetLocalizedString("ShImportLineRetrievedSuccessfully"));
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<PagedResponse<ShImportLineDto>>.ErrorResult(
+                    _localizationService.GetLocalizedString("ShImportLineErrorOccurred"),
+                    ex.Message ?? string.Empty,
+                    500);
+            }
+        }
+
+
         public async Task<ApiResponse<ShImportLineDto>> GetByIdAsync(long id)
         {
             try

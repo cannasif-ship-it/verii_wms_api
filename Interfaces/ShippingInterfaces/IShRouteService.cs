@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IShRouteService
     {
         Task<ApiResponse<IEnumerable<ShRouteDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<ShRouteDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<ShRouteDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<ShRouteDto>>> GetBySerialNoAsync(string serialNo);
         Task<ApiResponse<ShRouteDto>> CreateAsync(CreateShRouteDto createDto);
