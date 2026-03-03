@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IPrImportLineService
     {
         Task<ApiResponse<IEnumerable<PrImportLineDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<PrImportLineDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<PrImportLineDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<PrImportLineDto>>> GetByHeaderIdAsync(long headerId);
         Task<ApiResponse<IEnumerable<PrImportLineDto>>> GetByLineIdAsync(long lineId);

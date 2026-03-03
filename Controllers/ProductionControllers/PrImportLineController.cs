@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WMS_WEBAPI.DTOs;
 using WMS_WEBAPI.Interfaces;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Controllers
 {
@@ -23,6 +24,14 @@ namespace WMS_WEBAPI.Controllers
             var result = await _prImportLineService.GetAllAsync();
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost("paged")]
+        public async Task<ActionResult<ApiResponse<PagedResponse<PrImportLineDto>>>> GetPaged([FromBody] PagedRequest request)
+        {
+            var result = await _prImportLineService.GetPagedAsync(request);
+            return StatusCode(result.StatusCode, result);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse<PrImportLineDto>>> GetById(long id)

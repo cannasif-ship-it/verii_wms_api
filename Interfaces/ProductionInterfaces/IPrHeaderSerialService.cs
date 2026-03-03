@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IPrHeaderSerialService
     {
         Task<ApiResponse<IEnumerable<PrHeaderSerialDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<PrHeaderSerialDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<PrHeaderSerialDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<PrHeaderSerialDto>>> GetByHeaderIdAsync(long headerId);
         Task<ApiResponse<PrHeaderSerialDto>> CreateAsync(CreatePrHeaderSerialDto createDto);
