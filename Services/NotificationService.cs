@@ -108,7 +108,7 @@ namespace WMS_WEBAPI.Services
                 var baseQuery = _unitOfWork.Notifications.AsQueryable()
                     .Where(x => x.RecipientUserId == userId && !x.IsDeleted);
 
-                baseQuery = baseQuery.ApplyFilters(request.Filters);
+                baseQuery = baseQuery.ApplyFilters(request.Filters, request.FilterLogic);
 
                 // Get unread count (totalCount will be unread notifications count)
                 var unreadCount = await baseQuery
