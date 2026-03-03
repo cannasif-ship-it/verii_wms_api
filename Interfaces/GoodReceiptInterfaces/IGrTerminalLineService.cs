@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IGrTerminalLineService
     {
         Task<ApiResponse<IEnumerable<GrTerminalLineDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<GrTerminalLineDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<GrTerminalLineDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<GrTerminalLineDto>>> GetByHeaderIdAsync(long headerId);
         Task<ApiResponse<IEnumerable<GrTerminalLineDto>>> GetByUserIdAsync(long userId);

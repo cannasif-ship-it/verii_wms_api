@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IGrLineSerialService
     {
         Task<ApiResponse<IEnumerable<GrLineSerialDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<GrLineSerialDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<PagedResponse<GrLineSerialDto>>> GetPagedAsync(int pageNumber, int pageSize, string? sortBy = null, string? sortDirection = "asc");
         Task<ApiResponse<GrLineSerialDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<GrLineSerialDto>>> GetByLineIdAsync(long lineId);
