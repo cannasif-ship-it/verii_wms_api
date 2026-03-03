@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WMS_WEBAPI.DTOs;
 using WMS_WEBAPI.Interfaces;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Controllers
 {
@@ -25,6 +26,14 @@ namespace WMS_WEBAPI.Controllers
             var result = await _srtParameterService.GetAllAsync();
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost("paged")]
+        public async Task<ActionResult<ApiResponse<PagedResponse<SrtParameterDto>>>> GetPaged([FromBody] PagedRequest request)
+        {
+            var result = await _srtParameterService.GetPagedAsync(request);
+            return StatusCode(result.StatusCode, result);
+        }
+
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<ApiResponse<SrtParameterDto>>> GetById(long id)
