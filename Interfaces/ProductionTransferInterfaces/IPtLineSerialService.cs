@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IPtLineSerialService
     {
         Task<ApiResponse<IEnumerable<PtLineSerialDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<PtLineSerialDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<PtLineSerialDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<PtLineSerialDto>>> GetByLineIdAsync(long lineId);
         Task<ApiResponse<PtLineSerialDto>> CreateAsync(CreatePtLineSerialDto createDto);

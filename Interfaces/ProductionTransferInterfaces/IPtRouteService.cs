@@ -1,10 +1,12 @@
 using WMS_WEBAPI.DTOs;
+using WMS_WEBAPI.Services;
 
 namespace WMS_WEBAPI.Interfaces
 {
     public interface IPtRouteService
     {
         Task<ApiResponse<IEnumerable<PtRouteDto>>> GetAllAsync();
+        Task<ApiResponse<PagedResponse<PtRouteDto>>> GetPagedAsync(PagedRequest request);
         Task<ApiResponse<PtRouteDto>> GetByIdAsync(long id);
         Task<ApiResponse<IEnumerable<PtRouteDto>>> GetByImportLineIdAsync(long importLineId);
         Task<ApiResponse<IEnumerable<PtRouteDto>>> GetBySerialNoAsync(string serialNo);
