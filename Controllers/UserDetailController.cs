@@ -249,11 +249,11 @@ namespace WMS_WEBAPI.Controllers
                     fileSize = exists ? new FileInfo(filePath).Length : 0
                 };
 
-                return Ok(ApiResponse<object>.SuccessResult(result, exists ? "File exists" : "File not found"));
+                return Ok(ApiResponse<object>.SuccessResult(result, exists ? _localizationService.GetLocalizedString("DataRetrievedSuccessfully") : _localizationService.GetLocalizedString("DataNotFound")));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<object>.ErrorResult("Error", ex.Message, 500));
+                return StatusCode(500, ApiResponse<object>.ErrorResult(_localizationService.GetLocalizedString("InternalServerError"), ex.Message, 500));
             }
         }
 
@@ -270,7 +270,7 @@ namespace WMS_WEBAPI.Controllers
                 var user = await _unitOfWork.Users.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    return Ok(ApiResponse<object>.ErrorResult("User not found", $"User with ID {userId} not found", 404));
+                    return Ok(ApiResponse<object>.ErrorResult(_localizationService.GetLocalizedString("UserNotFound"), $"User with ID {userId} not found", 404));
                 }
 
                 // Get all UserDetail records for this user
@@ -351,7 +351,7 @@ namespace WMS_WEBAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<object>.ErrorResult("Error", ex.Message, 500));
+                return StatusCode(500, ApiResponse<object>.ErrorResult(_localizationService.GetLocalizedString("InternalServerError"), ex.Message, 500));
             }
         }
 
@@ -412,7 +412,7 @@ namespace WMS_WEBAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<object>.ErrorResult("Error", ex.Message, 500));
+                return StatusCode(500, ApiResponse<object>.ErrorResult(_localizationService.GetLocalizedString("InternalServerError"), ex.Message, 500));
             }
         }
 

@@ -12,11 +12,13 @@ namespace WMS_WEBAPI.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IPermissionAccessService _permissionAccessService;
+        private readonly ILocalizationService _localizationService;
 
-        public AuthController(IAuthService authService, IPermissionAccessService permissionAccessService)
+        public AuthController(IAuthService authService, IPermissionAccessService permissionAccessService, ILocalizationService localizationService)
         {
             _authService = authService;
             _permissionAccessService = permissionAccessService;
+            _localizationService = localizationService;
         }
 
         [AllowAnonymous]
@@ -111,7 +113,7 @@ namespace WMS_WEBAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim))
             {
-                return StatusCode(401, ApiResponse<string>.ErrorResult("Unauthorized", "Unauthorized", 401));
+                return StatusCode(401, ApiResponse<string>.ErrorResult(_localizationService.GetLocalizedString("Unauthorized"), _localizationService.GetLocalizedString("Unauthorized"), 401));
             }
             var userId = long.Parse(userIdClaim);
             var result = await _authService.ChangePasswordAsync(userId, request);

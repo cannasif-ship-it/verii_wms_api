@@ -104,7 +104,7 @@ namespace WMS_WEBAPI.Services
             {
                 if (!IsAllowedAuthorityTitle(createDto.Title))
                 {
-                    return ApiResponse<UserAuthorityDto>.ErrorResult("Only 'user' and 'admin' roles are allowed.", "Only 'user' and 'admin' roles are allowed.", 400);
+                    return ApiResponse<UserAuthorityDto>.ErrorResult(_localizationService.GetLocalizedString("OnlyUserAndAdminRolesAllowed"), _localizationService.GetLocalizedString("OnlyUserAndAdminRolesAllowed"), 400);
                 }
 
                 var entity = _mapper.Map<UserAuthority>(createDto);
@@ -127,7 +127,7 @@ namespace WMS_WEBAPI.Services
             {
                 if (!IsAllowedAuthorityTitle(updateDto.Title))
                 {
-                    return ApiResponse<UserAuthorityDto>.ErrorResult("Only 'user' and 'admin' roles are allowed.", "Only 'user' and 'admin' roles are allowed.", 400);
+                    return ApiResponse<UserAuthorityDto>.ErrorResult(_localizationService.GetLocalizedString("OnlyUserAndAdminRolesAllowed"), _localizationService.GetLocalizedString("OnlyUserAndAdminRolesAllowed"), 400);
                 }
 
                 var entity = await _unitOfWork.UserAuthorities.GetByIdAsync(id);
