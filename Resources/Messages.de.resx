@@ -1079,4 +1079,10 @@
   </data>
   <!-- #endregion UserAuthority -->
 
+  <data name="Unauthorized" xml:space="preserve">
+    <value>Nicht autorisiert</value>
+  </data>
+  <data name="OnlyUserAndAdminRolesAllowed" xml:space="preserve">
+    <value>Nur "user"- und "admin"-Rollen sind erlaubt</value>
+  </data>
 </root>

@@ -2900,4 +2900,10 @@
   </data>
   <!-- #endregion UserAuthority -->
 
+  <data name="Unauthorized" xml:space="preserve">
+    <value>Yetkisiz erişim</value>
+  </data>
+  <data name="OnlyUserAndAdminRolesAllowed" xml:space="preserve">
+    <value>Yalnızca 'user' ve 'admin' rolleri kullanılabilir</value>
+  </data>
 </root>
