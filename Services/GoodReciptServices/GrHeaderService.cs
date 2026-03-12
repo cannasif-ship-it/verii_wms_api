@@ -131,7 +131,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 var grHeader = _mapper.Map<GrHeader>(createDto);
-                grHeader.CreatedDate = DateTime.UtcNow;
+                grHeader.CreatedDate = DateTimeProvider.Now;
                 grHeader.IsDeleted = false;
 
                 await _unitOfWork.GrHeaders.AddAsync(grHeader);
@@ -167,7 +167,7 @@ namespace WMS_WEBAPI.Services
 
                 // Map updateDto to grHeader
                 _mapper.Map(updateDto, grHeader);
-                grHeader.UpdatedDate = DateTime.UtcNow;
+                grHeader.UpdatedDate = DateTimeProvider.Now;
 
                 _unitOfWork.GrHeaders.Update(grHeader);
                 await _unitOfWork.SaveChangesAsync();
@@ -664,7 +664,7 @@ namespace WMS_WEBAPI.Services
                 try
                 {
                     entity.IsCompleted = true;
-                    entity.CompletionDate = DateTime.UtcNow;
+                    entity.CompletionDate = DateTimeProvider.Now;
                     
                     // Set IsPendingApproval based on parameter requirement
                     entity.IsPendingApproval = grParameter != null && grParameter.RequireApprovalBeforeErp;
@@ -696,7 +696,7 @@ namespace WMS_WEBAPI.Services
                             RecipientUserId = entity.CreatedBy.Value,
                             RelatedEntityType = NotificationEntityType.GRDone,
                             RelatedEntityId = entity.Id,
-                            DeliveredAt = DateTime.UtcNow
+                            DeliveredAt = DateTimeProvider.Now
                         };
 
                         await _unitOfWork.Notifications.AddAsync(notification);

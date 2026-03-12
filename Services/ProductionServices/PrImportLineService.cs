@@ -150,7 +150,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<PrImportLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.PrImportLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -173,7 +173,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<PrImportLineDto>.ErrorResult(_localizationService.GetLocalizedString("PrImportLineNotFound"), _localizationService.GetLocalizedString("PrImportLineNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.PrImportLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<PrImportLineDto>(entity);

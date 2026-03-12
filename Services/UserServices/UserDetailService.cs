@@ -196,7 +196,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 _mapper.Map(dto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 
                 // Use Update which will handle tracking correctly
                 _unitOfWork.UserDetails.Update(entity);
@@ -228,7 +228,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 entity.IsDeleted = true;
-                entity.DeletedDate = DateTime.UtcNow;
+                entity.DeletedDate = DateTimeProvider.Now;
                 _unitOfWork.UserDetails.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
 

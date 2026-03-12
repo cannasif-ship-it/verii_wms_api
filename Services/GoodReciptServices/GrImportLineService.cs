@@ -377,7 +377,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var grImportLine = _mapper.Map<GrImportLine>(createDto);
-                grImportLine.CreatedDate = DateTime.UtcNow;
+                grImportLine.CreatedDate = DateTimeProvider.Now;
                 
                 await _unitOfWork.GrImportLines.AddAsync(grImportLine);
                 await _unitOfWork.SaveChangesAsync();
@@ -405,7 +405,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 _mapper.Map(updateDto, existingGrImportLine);
-                existingGrImportLine.UpdatedDate = DateTime.UtcNow;
+                existingGrImportLine.UpdatedDate = DateTimeProvider.Now;
                 
                 _unitOfWork.GrImportLines.Update(existingGrImportLine);
                 await _unitOfWork.SaveChangesAsync();

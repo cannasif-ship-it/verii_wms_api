@@ -140,7 +140,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<WtImportLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
 
                 await _unitOfWork.WtImportLines.AddAsync(entity);
@@ -166,7 +166,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
 
                 _unitOfWork.WtImportLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();

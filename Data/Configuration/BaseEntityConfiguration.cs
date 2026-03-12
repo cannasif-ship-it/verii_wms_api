@@ -10,7 +10,7 @@ namespace WMS_WEBAPI.Data.Configuration
         {
             builder.Property(e => e.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("GETDATE()");
 
             builder.Property(e => e.UpdatedDate)
                 .IsRequired(false);

@@ -135,7 +135,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<PrHeader>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.PrHeaders.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -159,7 +159,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<PrHeaderDto>.ErrorResult(notFound, notFound, 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.PrHeaders.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<PrHeaderDto>(entity);
@@ -349,7 +349,7 @@ namespace WMS_WEBAPI.Services
                 try
                 {
                     entity.IsCompleted = true;
-                    entity.CompletionDate = DateTime.UtcNow;
+                    entity.CompletionDate = DateTimeProvider.Now;
                     
                     // Set IsPendingApproval based on parameter requirement
                     entity.IsPendingApproval = prParameter != null && prParameter.RequireApprovalBeforeErp;
@@ -381,7 +381,7 @@ namespace WMS_WEBAPI.Services
                             RecipientUserId = entity.CreatedBy.Value,
                             RelatedEntityType = NotificationEntityType.PRDone,
                             RelatedEntityId = entity.Id,
-                            DeliveredAt = DateTime.UtcNow
+                            DeliveredAt = DateTimeProvider.Now
                         };
 
                         await _unitOfWork.Notifications.AddAsync(notification);
@@ -418,7 +418,7 @@ namespace WMS_WEBAPI.Services
                 using (var tx = await _unitOfWork.BeginTransactionAsync())
                 {
                         var header = _mapper.Map<PrHeader>(request.Header);
-                        header.CreatedDate = DateTime.UtcNow;
+                        header.CreatedDate = DateTimeProvider.Now;
                         header.IsDeleted = false;
                         await _unitOfWork.PrHeaders.AddAsync(header);
                         await _unitOfWork.SaveChangesAsync();
@@ -585,7 +585,7 @@ namespace WMS_WEBAPI.Services
                         // 2. CREATE HEADER
                         // ============================================
                         var headerEntity = _mapper.Map<PrHeader>(request.Header.Header);
-                        headerEntity.CreatedDate = DateTime.UtcNow;
+                        headerEntity.CreatedDate = DateTimeProvider.Now;
                         headerEntity.IsDeleted = false;
                         
                         // Set IsPendingApproval: true if parameter exists and requires approval, otherwise false

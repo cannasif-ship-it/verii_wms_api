@@ -129,7 +129,7 @@ namespace WMS_WEBAPI.Data
                 RoleId = fallbackAdminRoleId,
                 IsEmailConfirmed = true,
                 IsActive = true,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTimeProvider.Now
             };
 
             context.Users.Add(adminUser);

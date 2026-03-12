@@ -123,7 +123,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<PtLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.PtLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -146,7 +146,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<PtLineDto>.ErrorResult(_localizationService.GetLocalizedString("PtLineNotFound"), _localizationService.GetLocalizedString("PtLineNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.PtLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<PtLineDto>(entity);

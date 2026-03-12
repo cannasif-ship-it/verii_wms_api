@@ -282,7 +282,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SitHeaderDto>.ErrorResult(_localizationService.GetLocalizedString("InvalidModelState"), _localizationService.GetLocalizedString("HeaderFieldsMissing"), 400);
                 }
                 var entity = _mapper.Map<SitHeader>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.SitHeaders.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -305,7 +305,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SitHeaderDto>.ErrorResult(_localizationService.GetLocalizedString("SitHeaderNotFound"), _localizationService.GetLocalizedString("SitHeaderNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.SitHeaders.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<SitHeaderDto>(entity);
@@ -494,7 +494,7 @@ namespace WMS_WEBAPI.Services
                 try
                 {
                     entity.IsCompleted = true;
-                    entity.CompletionDate = DateTime.UtcNow;
+                    entity.CompletionDate = DateTimeProvider.Now;
                     
                     // Set IsPendingApproval based on parameter requirement
                     entity.IsPendingApproval = sitParameter != null && sitParameter.RequireApprovalBeforeErp;
@@ -526,7 +526,7 @@ namespace WMS_WEBAPI.Services
                             RecipientUserId = entity.CreatedBy.Value,
                             RelatedEntityType = NotificationEntityType.SITDone,
                             RelatedEntityId = entity.Id,
-                            DeliveredAt = DateTime.UtcNow
+                            DeliveredAt = DateTimeProvider.Now
                         };
 
                         await _unitOfWork.Notifications.AddAsync(notification);

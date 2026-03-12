@@ -158,7 +158,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<PtRoute>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.PtRoutes.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -182,7 +182,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<PtRouteDto>.ErrorResult(notFound, notFound, 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.PtRoutes.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<PtRouteDto>(entity);

@@ -79,7 +79,7 @@ namespace WMS_WEBAPI.Repositories
 
         public async Task<T> AddAsync(T entity)
         {
-            entity.CreatedDate = DateTime.UtcNow;
+            entity.CreatedDate = DateTimeProvider.Now;
             var userId = GetCurrentUserId();
             entity.CreatedBy = userId;
             entity.IsDeleted = false;
@@ -92,7 +92,7 @@ namespace WMS_WEBAPI.Repositories
         {
             foreach (var entity in entities)
             {
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 var userId = GetCurrentUserId();
                 entity.CreatedBy = userId;
                 entity.IsDeleted = false;
@@ -106,7 +106,7 @@ namespace WMS_WEBAPI.Repositories
             if (entity != null)
             {
                 entity.IsDeleted = true;
-                entity.DeletedDate = DateTime.UtcNow;
+                entity.DeletedDate = DateTimeProvider.Now;
                 var userId = GetCurrentUserId();
                 entity.DeletedBy = userId;
                 
@@ -123,14 +123,14 @@ namespace WMS_WEBAPI.Repositories
             foreach (var entity in entities)
             {
                 entity.IsDeleted = true;
-                entity.DeletedDate = DateTime.UtcNow;
+                entity.DeletedDate = DateTimeProvider.Now;
                 entity.DeletedBy = userId;
             }
         }
 
         public void Update(T entity)
         {
-            entity.UpdatedDate = DateTime.UtcNow;
+            entity.UpdatedDate = DateTimeProvider.Now;
             var userId = GetCurrentUserId();
             entity.UpdatedBy = userId;
             _dbSet.Update(entity);

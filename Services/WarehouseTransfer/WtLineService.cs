@@ -160,7 +160,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
 
                 _unitOfWork.WtLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();

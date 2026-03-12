@@ -198,7 +198,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<PtHeader>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.PtHeaders.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -222,7 +222,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<PtHeaderDto>.ErrorResult(notFound, notFound, 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.PtHeaders.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<PtHeaderDto>(entity);
@@ -412,7 +412,7 @@ namespace WMS_WEBAPI.Services
                 try
                 {
                     entity.IsCompleted = true;
-                    entity.CompletionDate = DateTime.UtcNow;
+                    entity.CompletionDate = DateTimeProvider.Now;
                     
                     // Set IsPendingApproval based on parameter requirement
                     entity.IsPendingApproval = ptParameter != null && ptParameter.RequireApprovalBeforeErp;
@@ -444,7 +444,7 @@ namespace WMS_WEBAPI.Services
                             RecipientUserId = entity.CreatedBy.Value,
                             RelatedEntityType = NotificationEntityType.PTDone,
                             RelatedEntityId = entity.Id,
-                            DeliveredAt = DateTime.UtcNow
+                            DeliveredAt = DateTimeProvider.Now
                         };
 
                         await _unitOfWork.Notifications.AddAsync(notification);

@@ -374,7 +374,7 @@ namespace WMS_WEBAPI.Services
                         UserId = userId,
                         PermissionGroupId = groupId,
                         IsDeleted = false,
-                        CreatedDate = DateTime.UtcNow,
+                        CreatedDate = DateTimeProvider.Now,
                     });
                 }
 

@@ -281,7 +281,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SrtHeaderDto>.ErrorResult(_localizationService.GetLocalizedString("InvalidModelState"), _localizationService.GetLocalizedString("HeaderFieldsMissing"), 400);
                 }
                var entity = _mapper.Map<SrtHeader>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.SrtHeaders.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -305,7 +305,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SrtHeaderDto>.ErrorResult(nf, nf, 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.SrtHeaders.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<SrtHeaderDto>(entity);
@@ -489,7 +489,7 @@ namespace WMS_WEBAPI.Services
                 try
                 {
                     entity.IsCompleted = true;
-                    entity.CompletionDate = DateTime.UtcNow;
+                    entity.CompletionDate = DateTimeProvider.Now;
                     
                     // Set IsPendingApproval based on parameter requirement
                     entity.IsPendingApproval = srtParameter != null && srtParameter.RequireApprovalBeforeErp;
@@ -521,7 +521,7 @@ namespace WMS_WEBAPI.Services
                             RecipientUserId = entity.CreatedBy.Value,
                             RelatedEntityType = NotificationEntityType.SRTDone,
                             RelatedEntityId = entity.Id,
-                            DeliveredAt = DateTime.UtcNow
+                            DeliveredAt = DateTimeProvider.Now
                         };
 
                         await _unitOfWork.Notifications.AddAsync(notification);

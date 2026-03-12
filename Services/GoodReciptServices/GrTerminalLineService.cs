@@ -125,7 +125,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<GrTerminalLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.GrTerminalLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -148,7 +148,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<GrTerminalLineDto>.ErrorResult(_localizationService.GetLocalizedString("GrTerminalLineNotFound"), _localizationService.GetLocalizedString("GrTerminalLineNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.GrTerminalLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<GrTerminalLineDto>(entity);

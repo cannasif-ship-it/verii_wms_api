@@ -30,7 +30,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<Notification>(dto);
-                entity.DeliveredAt = DateTime.UtcNow; // Auto-set delivery time
+                entity.DeliveredAt = DateTimeProvider.Now; // Auto-set delivery time
 
                 await _unitOfWork.Notifications.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -69,7 +69,7 @@ namespace WMS_WEBAPI.Services
                     {
                         var entity = _mapper.Map<Notification>(dto);
                         entity.RecipientUserId = userId;
-                        entity.DeliveredAt = DateTime.UtcNow; // Auto-set delivery time
+                        entity.DeliveredAt = DateTimeProvider.Now; // Auto-set delivery time
                         entities.Add(entity);
                     }
 
@@ -276,7 +276,7 @@ namespace WMS_WEBAPI.Services
                     RelatedEntityType = entityType,
                     RelatedEntityId = kayitId, // RelatedEntityId contains the order number (header ID)
                     TerminalActionCode = terminalActionCode,
-                    DeliveredAt = DateTime.UtcNow
+                    DeliveredAt = DateTimeProvider.Now
                 };
                 notifications.Add(notification);
             }

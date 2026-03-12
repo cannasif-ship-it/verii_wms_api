@@ -146,7 +146,7 @@ namespace WMS_WEBAPI.Services
                 var activeSession = _context.Set<UserSession>().FirstOrDefault(s => s.UserId == user.Id && s.RevokedAt == null);
                 if (activeSession != null)
                 {
-                    activeSession.RevokedAt = DateTime.UtcNow;
+                    activeSession.RevokedAt = DateTimeProvider.Now;
                     _context.SaveChanges();
                     await WMS_WEBAPI.Hubs.AuthHub.ForceLogoutUser(_hubContext, user.Id.ToString());
                 }
@@ -155,10 +155,10 @@ namespace WMS_WEBAPI.Services
                 {
                     UserId = user.Id,
                     SessionId = Guid.NewGuid(),
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = DateTimeProvider.Now,
                     Token = ComputeSha256Hash(token),
                     IsDeleted = false,
-                    CreatedDate = DateTime.UtcNow
+                    CreatedDate = DateTimeProvider.Now
                 };
                 _context.Set<UserSession>().Add(session);
                 _context.SaveChanges();
@@ -218,7 +218,7 @@ namespace WMS_WEBAPI.Services
                         UserId = user.Id,
                         TokenHash = tokenHash,
                         ExpiresAt = expiresAt,
-                        CreatedDate = DateTime.UtcNow,
+                        CreatedDate = DateTimeProvider.Now,
                         IsDeleted = false
                     };
                     _context.Set<PasswordResetRequest>().Add(reset);
@@ -306,7 +306,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-                user.UpdatedDate = DateTime.UtcNow;
+                user.UpdatedDate = DateTimeProvider.Now;
                 var affectedRows = await _unitOfWork.SaveChangesAsync();
                 if (affectedRows == 0 || !BCrypt.Net.BCrypt.Verify(request.NewPassword, user.PasswordHash))
                 {
@@ -330,10 +330,10 @@ namespace WMS_WEBAPI.Services
                 {
                     UserId = user.Id,
                     SessionId = Guid.NewGuid(),
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = DateTimeProvider.Now,
                     Token = ComputeSha256Hash(newToken),
                     IsDeleted = false,
-                    CreatedDate = DateTime.UtcNow
+                    CreatedDate = DateTimeProvider.Now
                 };
                 _context.Set<UserSession>().Add(session);
                 await _context.SaveChangesAsync();

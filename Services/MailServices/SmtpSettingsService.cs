@@ -92,7 +92,7 @@ namespace WMS_WEBAPI.Services
                     entity = new SmtpSetting
                     {
                         IsDeleted = false,
-                        CreatedDate = DateTime.UtcNow,
+                        CreatedDate = DateTimeProvider.Now,
                         CreatedBy = userId
                     };
 
@@ -102,7 +102,7 @@ namespace WMS_WEBAPI.Services
                         entity.PasswordEncrypted = _protector.Protect(dto.Password);
                     }
 
-                    entity.UpdatedDate = DateTime.UtcNow;
+                    entity.UpdatedDate = DateTimeProvider.Now;
                     entity.UpdatedBy = userId;
 
                     await _unitOfWork.SmtpSettings.AddAsync(entity);
@@ -121,7 +121,7 @@ namespace WMS_WEBAPI.Services
                     entity.PasswordEncrypted = _protector.Protect(dto.Password);
                 }
 
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 entity.UpdatedBy = userId;
 
                 _unitOfWork.SmtpSettings.Update(entity);
@@ -229,7 +229,7 @@ namespace WMS_WEBAPI.Services
                     FromName = fromName,
                     Timeout = timeout,
                     IsDeleted = false,
-                    CreatedDate = DateTime.UtcNow
+                    CreatedDate = DateTimeProvider.Now
                 };
                 await _unitOfWork.SmtpSettings.AddAsync(entity);
             }
@@ -246,7 +246,7 @@ namespace WMS_WEBAPI.Services
                 entity.IsDeleted = false;
                 entity.DeletedDate = null;
                 entity.DeletedBy = null;
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.SmtpSettings.Update(entity);
             }
 

@@ -160,7 +160,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<SitRoute>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.SitRoutes.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -184,7 +184,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SitRouteDto>.ErrorResult(nf, nf, 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.SitRoutes.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<SitRouteDto>(entity);

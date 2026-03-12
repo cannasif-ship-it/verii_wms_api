@@ -159,7 +159,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<SitImportLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.SitImportLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -182,7 +182,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<SitImportLineDto>.ErrorResult(_localizationService.GetLocalizedString("SitImportLineNotFound"), _localizationService.GetLocalizedString("SitImportLineNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.SitImportLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<SitImportLineDto>(entity);

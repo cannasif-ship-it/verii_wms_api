@@ -113,7 +113,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<IcTerminalLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
                 await _unitOfWork.IcTerminalLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -136,7 +136,7 @@ namespace WMS_WEBAPI.Services
                     return ApiResponse<IcTerminalLineDto>.ErrorResult(_localizationService.GetLocalizedString("IcTerminalLineNotFound"), _localizationService.GetLocalizedString("IcTerminalLineNotFound"), 404);
                 }
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
                 _unitOfWork.IcTerminalLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
                 var dto = _mapper.Map<IcTerminalLineDto>(entity);

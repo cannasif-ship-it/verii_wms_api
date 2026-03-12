@@ -148,7 +148,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<WtTerminalLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
                 entity.IsDeleted = false;
 
                 await _unitOfWork.WtTerminalLines.AddAsync(entity);

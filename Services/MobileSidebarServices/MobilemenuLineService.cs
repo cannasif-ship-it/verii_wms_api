@@ -149,7 +149,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = _mapper.Map<MobilemenuLine>(createDto);
-                entity.CreatedDate = DateTime.UtcNow;
+                entity.CreatedDate = DateTimeProvider.Now;
 
                 await _unitOfWork.MobilemenuLines.AddAsync(entity);
                 await _unitOfWork.SaveChangesAsync();
@@ -176,7 +176,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 _mapper.Map(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTimeProvider.Now;
 
                 _unitOfWork.MobilemenuLines.Update(entity);
                 await _unitOfWork.SaveChangesAsync();
