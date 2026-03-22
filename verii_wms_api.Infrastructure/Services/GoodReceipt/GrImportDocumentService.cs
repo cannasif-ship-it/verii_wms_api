@@ -70,7 +70,11 @@ namespace WMS_WEBAPI.Services
                 var document = await _unitOfWork.GrImportDocuments.GetByIdAsync(id);
                 if (document == null)
                 {
-                    return ApiResponse<GrImportDocumentDto>.ErrorResult(_localizationService.GetLocalizedString("GrImportDocumentNotFound"), "Record not found", 404, "GrImportDocument not found");
+                    return ApiResponse<GrImportDocumentDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"));
                 }
 
                 var documentDto = _mapper.Map<GrImportDocumentDto>(document);
@@ -105,7 +109,11 @@ namespace WMS_WEBAPI.Services
                 var headerExists = await _unitOfWork.GrHeaders.ExistsAsync((int)createDto.HeaderId);
                 if (!headerExists)
                 {
-                    return ApiResponse<GrImportDocumentDto>.ErrorResult(_localizationService.GetLocalizedString("GrImportDocumentInvalidHeaderId"), "Invalid header ID", 404, "Header not found");
+                    return ApiResponse<GrImportDocumentDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrImportDocumentInvalidHeaderId"),
+                        _localizationService.GetLocalizedString("HeaderNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("HeaderNotFound"));
                 }
 
                 var document = _mapper.Map<GrImportDocument>(createDto);
@@ -128,14 +136,22 @@ namespace WMS_WEBAPI.Services
                 var document = await _unitOfWork.GrImportDocuments.GetByIdAsync(id);
                 if (document == null)
                 {
-                    return ApiResponse<GrImportDocumentDto>.ErrorResult(_localizationService.GetLocalizedString("GrImportDocumentNotFound"), "Record not found", 404, "GrImportDocument not found");
+                    return ApiResponse<GrImportDocumentDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"));
                 }
 
                 // HeaderId'nin geçerli olup olmadığını kontrol et
                 var headerExists = await _unitOfWork.GrHeaders.ExistsAsync((int)updateDto.HeaderId);
                 if (!headerExists)
                 {
-                    return ApiResponse<GrImportDocumentDto>.ErrorResult(_localizationService.GetLocalizedString("GrImportDocumentInvalidHeaderId"), "Invalid header ID", 404, "Header not found");
+                    return ApiResponse<GrImportDocumentDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrImportDocumentInvalidHeaderId"),
+                        _localizationService.GetLocalizedString("HeaderNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("HeaderNotFound"));
                 }
 
                 _mapper.Map(updateDto, document);
@@ -158,7 +174,11 @@ namespace WMS_WEBAPI.Services
                 var document = await _unitOfWork.GrImportDocuments.GetByIdAsync(id);
                 if (document == null)
                 {
-                    return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("GrImportDocumentNotFound"), "Record not found", 404, "GrImportDocument not found");
+                    return ApiResponse<bool>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrImportDocumentNotFound"));
                 }
 
                 await _unitOfWork.GrImportDocuments.SoftDelete(id);

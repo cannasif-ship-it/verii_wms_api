@@ -166,7 +166,10 @@ namespace WMS_WEBAPI.Services
             {
                 if (ids == null || ids.Count == 0)
                 {
-                    return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("InvalidModelState"), "Notification IDs list cannot be empty", 400);
+                    return ApiResponse<bool>.ErrorResult(
+                        _localizationService.GetLocalizedString("InvalidModelState"),
+                        _localizationService.GetLocalizedString("NotificationIdsRequired"),
+                        400);
                 }
 
                 // Get all notifications that are not deleted and match the provided IDs
@@ -177,7 +180,10 @@ namespace WMS_WEBAPI.Services
 
                 if (entities == null || !entities.Any())
                 {
-                    return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("NotificationNotFound"), "No valid notifications found", 404);
+                    return ApiResponse<bool>.ErrorResult(
+                        _localizationService.GetLocalizedString("NotificationNotFound"),
+                        _localizationService.GetLocalizedString("NotificationValidRecordsNotFound"),
+                        404);
                 }
 
                 var now = DateTime.UtcNow;

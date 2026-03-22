@@ -88,7 +88,11 @@ namespace WMS_WEBAPI.Services
                 var line = await _unitOfWork.GrLines.GetByIdAsync(id);
                 if (line == null)
                 {
-                    return ApiResponse<GrLineDto>.ErrorResult(_localizationService.GetLocalizedString("GrLineNotFound"), "Record not found", 404, "GrLine not found");
+                    return ApiResponse<GrLineDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrLineNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrLineMissing"));
                 }
 
                 var lineDto = _mapper.Map<GrLineDto>(line);
@@ -137,7 +141,11 @@ namespace WMS_WEBAPI.Services
                 var headerExists = await _unitOfWork.GrHeaders.ExistsAsync((int)createDto.HeaderId);
                 if (!headerExists)
                 {
-                    return ApiResponse<GrLineDto>.ErrorResult(_localizationService.GetLocalizedString("GrHeaderNotFound"), "Header not found", 400, "GrHeader not found");
+                    return ApiResponse<GrLineDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrHeaderNotFound"),
+                        _localizationService.GetLocalizedString("HeaderNotFound"),
+                        400,
+                        _localizationService.GetLocalizedString("GrHeaderMissing"));
                 }
 
                 var line = _mapper.Map<GrLine>(createDto);
@@ -161,14 +169,22 @@ namespace WMS_WEBAPI.Services
                 var existingLine = await _unitOfWork.GrLines.GetByIdAsync(id);
                 if (existingLine == null)
                 {
-                    return ApiResponse<GrLineDto>.ErrorResult(_localizationService.GetLocalizedString("GrLineNotFound"), "Record not found", 404, "GrLine not found");
+                    return ApiResponse<GrLineDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrLineNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrLineMissing"));
                 }
 
                 // Header'ın var olup olmadığını kontrol et
                 var headerExists = await _unitOfWork.GrHeaders.ExistsAsync((int)updateDto.HeaderId);
                 if (!headerExists)
                 {
-                    return ApiResponse<GrLineDto>.ErrorResult(_localizationService.GetLocalizedString("GrHeaderNotFound"), "Header not found", 400, "GrHeader not found");
+                    return ApiResponse<GrLineDto>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrHeaderNotFound"),
+                        _localizationService.GetLocalizedString("HeaderNotFound"),
+                        400,
+                        _localizationService.GetLocalizedString("GrHeaderMissing"));
                 }
 
                 _mapper.Map(updateDto, existingLine);
@@ -192,7 +208,11 @@ namespace WMS_WEBAPI.Services
                 var entity = await _unitOfWork.GrLines.GetByIdAsync(id);
                 if (entity == null || entity.IsDeleted)
                 {
-                    return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("GrLineNotFound"), "Record not found", 404, "GrLine not found");
+                    return ApiResponse<bool>.ErrorResult(
+                        _localizationService.GetLocalizedString("GrLineNotFound"),
+                        _localizationService.GetLocalizedString("RecordNotFound"),
+                        404,
+                        _localizationService.GetLocalizedString("GrLineMissing"));
                 }
 
                 var hasActiveLineSerials = await _unitOfWork.GrLineSerials

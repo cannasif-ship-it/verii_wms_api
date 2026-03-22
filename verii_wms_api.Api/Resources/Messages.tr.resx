@@ -1,51 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
+<?xml version='1.0' encoding='utf-8'?>
+<root xmlns:ns1="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:schema id="root">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xs:element name="root" ns1:IsDataSet="true">
+      <xs:complexType>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element name="metadata">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+              <xs:attribute name="type" type="xsd:string" />
+              <xs:attribute name="mimetype" type="xsd:string" />
+              <xs:attribute ref="xml:space" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="assembly">
+            <xs:complexType>
+              <xs:attribute name="alias" type="xsd:string" />
+              <xs:attribute name="name" type="xsd:string" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="data">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" ns1:Ordinal="1" />
+                <xs:element name="comment" type="xsd:string" minOccurs="0" ns1:Ordinal="2" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+              <xs:attribute name="type" type="xsd:string" />
+              <xs:attribute name="mimetype" type="xsd:string" />
+              <xs:attribute ref="xml:space" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="resheader">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" ns1:Ordinal="1" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   
-  <!-- #region AuthService -->
+  
   <data name="AuthErrorOccurred" xml:space="preserve">
     <value>Kimlik doğrulama işlemi sırasında hata oluştu</value>
   </data>
@@ -114,9 +114,9 @@
   <data name="UserRegisteredSuccessfully" xml:space="preserve">
     <value>Kullanıcı başarıyla kaydedildi</value>
   </data>
-  <!-- #endregion AuthService -->
+  
 
-  <!-- #region Common -->
+  
   <data name="Created" xml:space="preserve">
     <value>Kayıt başarıyla oluşturuldu</value>
   </data>
@@ -267,9 +267,9 @@
   <data name="InvalidCorrelationKey" xml:space="preserve">
     <value>Geçersiz korelasyon anahtarı sağlandı</value>
   </data>
-  <!-- #endregion Common -->
+  
 
-  <!-- #region ErpService -->
+  
   <data name="CariRetrievalError" xml:space="preserve">
     <value>Cari bilgileri getirilirken hata oluştu</value>
   </data>
@@ -336,9 +336,9 @@
   <data name="StockWarehouseRetrievedSuccessfully" xml:space="preserve">
     <value>Stok depo bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion ErpService -->
+  
 
-  <!-- #region GrFunction -->
+  
   <data name="GoodReciptFunctionsHeaderRetrievalError" xml:space="preserve">
     <value>Açık sipariş başlık bilgileri getirilirken hata oluştu</value>
   </data>
@@ -351,9 +351,9 @@
   <data name="GoodReciptFunctionsLineRetrievedSuccessfully" xml:space="preserve">
     <value>Açık sipariş satır bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion GrFunction -->
+  
 
-  <!-- #region GrHeader -->
+  
   <data name="GrHeaderCreatedSuccessfully" xml:space="preserve">
     <value>Mal Kabul Başlığı başarıyla oluşturuldu</value>
   </data>
@@ -414,9 +414,9 @@
   <data name="GrDoneNotificationMessage" xml:space="preserve">
     <value>Mal kabul emri numaranız {0} tamamlandı.</value>
   </data>
-  <!-- #endregion GrHeader -->
+  
 
-  <!-- #region GrImportDocument -->
+  
   <data name="GrImportDocumentCreateError" xml:space="preserve">
     <value>İçe aktarma belgesi oluşturulurken hata oluştu</value>
   </data>
@@ -453,9 +453,9 @@
   <data name="GrImportDocumentUpdatedSuccessfully" xml:space="preserve">
     <value>İçe aktarma belgesi başarıyla güncellendi</value>
   </data>
-  <!-- #endregion GrImportDocument -->
+  
 
-  <!-- #region GrImportLine -->
+  
   <data name="GrImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Mal Kabul İthalat Satırı başarıyla oluşturuldu</value>
   </data>
@@ -501,9 +501,9 @@
   <data name="GrImportSerialLineGetByImportLineIdError" xml:space="preserve">
     <value>İthalat Satır ID ile Mal Kabul İthalat Seri Satırları getirilirken hata oluştu</value>
   </data>
-  <!-- #endregion GrImportLine -->
+  
 
-  <!-- #region GrLine -->
+  
   <data name="GrLineCreateError" xml:space="preserve">
     <value>Mal Kabul Satır oluşturulurken hata oluştu</value>
   </data>
@@ -543,9 +543,9 @@
   <data name="GrLineUpdatedSuccessfully" xml:space="preserve">
     <value>Mal Kabul Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion GrLine -->
+  
 
-  <!-- #region GrLineSerial -->
+  
   <data name="GrImportSerialLineCreateError" xml:space="preserve">
     <value>Mal Kabul İthalat Seri Satırı oluşturulurken hata oluştu</value>
   </data>
@@ -582,18 +582,18 @@
   <data name="GrImportSerialLineUpdatedSuccessfully" xml:space="preserve">
     <value>Mal Kabul İthalat Seri Satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion GrLineSerial -->
+  
 
-  <!-- #region GrRoute -->
+  
   <data name="GrImportLineRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion GrRoute -->
+  
 
-  <!-- #region GrTerminalLine -->
-  <!-- #endregion GrTerminalLine -->
+  
+  
 
-  <!-- #region IcHeader -->
+  
   <data name="IcHeaderCreatedSuccessfully" xml:space="preserve">
     <value>Sayım Başlık başarıyla oluşturuldu</value>
   </data>
@@ -615,9 +615,9 @@
   <data name="IcHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Sayım Başlık başarıyla güncellendi</value>
   </data>
-  <!-- #endregion IcHeader -->
+  
 
-  <!-- #region IcImportLine -->
+  
   <data name="IcImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Sayım İçe Aktarım Satır başarıyla oluşturuldu</value>
   </data>
@@ -639,9 +639,9 @@
   <data name="IcImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sayım İçe Aktarım Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion IcImportLine -->
+  
 
-  <!-- #region IcRoute -->
+  
   <data name="IcRouteCreatedSuccessfully" xml:space="preserve">
     <value>Sayım Rota başarıyla oluşturuldu</value>
   </data>
@@ -660,9 +660,9 @@
   <data name="IcRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Sayım Rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion IcRoute -->
+  
 
-  <!-- #region IcTerminalLine -->
+  
   <data name="IcTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Sayım Terminal Satır başarıyla oluşturuldu</value>
   </data>
@@ -681,9 +681,9 @@
   <data name="IcTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sayım Terminal Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion IcTerminalLine -->
+  
 
-  <!-- #region JwtService -->
+  
   <data name="TokenGeneratedSuccessfully" xml:space="preserve">
     <value>Token başarıyla oluşturuldu</value>
   </data>
@@ -693,9 +693,9 @@
   <data name="TokenGenerationFailedMessage" xml:space="preserve">
     <value>Token oluşturma başarısız</value>
   </data>
-  <!-- #endregion JwtService -->
+  
 
-  <!-- #region NotificationService -->
+  
   <data name="NotificationBulkCreatedSuccessfully" xml:space="preserve">
     <value>Toplu bildirimler başarıyla oluşturuldu</value>
   </data>
@@ -726,9 +726,9 @@
   <data name="NotificationRetrievedSuccessfully" xml:space="preserve">
     <value>Bildirim bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion NotificationService -->
+  
 
-  <!-- #region PrFunction -->
+  
   <data name="ProductHeaderRetrievalError" xml:space="preserve">
     <value>Üretim emri başlık bilgisi getirilirken hata oluştu</value>
   </data>
@@ -741,9 +741,9 @@
   <data name="ProductLinesRetrievedSuccessfully" xml:space="preserve">
     <value>Üretim emri satırları başarıyla getirildi</value>
   </data>
-  <!-- #endregion PrFunction -->
+  
 
-  <!-- #region PrHeader -->
+  
   <data name="PrHeaderApprovalUpdateError" xml:space="preserve">
     <value>Üretim emri onayı güncellenirken hata oluştu</value>
   </data>
@@ -846,9 +846,9 @@
   <data name="PrDoneNotificationMessage" xml:space="preserve">
     <value>Üretim emri numaranız {0} tamamlandı.</value>
   </data>
-  <!-- #endregion PrHeader -->
+  
 
-  <!-- #region PrHeaderSerial -->
+  
   <data name="PrHeaderSerialCreatedSuccessfully" xml:space="preserve">
     <value>Üretim başlık seri başarıyla oluşturuldu</value>
   </data>
@@ -867,9 +867,9 @@
   <data name="PrHeaderSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim başlık seri başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrHeaderSerial -->
+  
 
-  <!-- #region PrImportLine -->
+  
   <data name="PrImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Üretim ithalat satırı başarıyla oluşturuldu</value>
   </data>
@@ -894,9 +894,9 @@
   <data name="PrImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim ithalat satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrImportLine -->
+  
 
-  <!-- #region PrLine -->
+  
   <data name="PrLineCreatedSuccessfully" xml:space="preserve">
     <value>Üretim satır başarıyla oluşturuldu</value>
   </data>
@@ -924,9 +924,9 @@
   <data name="PrLineUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrLine -->
+  
 
-  <!-- #region PrLineSerial -->
+  
   <data name="PrLineSerialCreatedSuccessfully" xml:space="preserve">
     <value>Üretim satır seri başarıyla oluşturuldu</value>
   </data>
@@ -951,9 +951,9 @@
   <data name="PrLineSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim satır seri başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrLineSerial -->
+  
 
-  <!-- #region PrRoute -->
+  
   <data name="PrLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -984,9 +984,9 @@
   <data name="PrRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrRoute -->
+  
 
-  <!-- #region PrTerminalLine -->
+  
   <data name="PrTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Üretim terminal satırı başarıyla oluşturuldu</value>
   </data>
@@ -1005,9 +1005,9 @@
   <data name="PrTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim terminal satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PrTerminalLine -->
+  
 
-  <!-- #region PtHeader -->
+  
   <data name="PtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Üretim transfer emri onayı güncellenirken hata oluştu</value>
   </data>
@@ -1095,9 +1095,9 @@
   <data name="PtDoneNotificationMessage" xml:space="preserve">
     <value>Üretim transfer emri numaranız {0} tamamlandı.</value>
   </data>
-  <!-- #endregion PtHeader -->
+  
 
-  <!-- #region PtImportLine -->
+  
   <data name="PtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Üretim transfer ithalat satırı başarıyla oluşturuldu</value>
   </data>
@@ -1134,9 +1134,9 @@
   <data name="PtImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim transfer ithalat satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PtImportLine -->
+  
 
-  <!-- #region PtLine -->
+  
   <data name="PtLineCreatedSuccessfully" xml:space="preserve">
     <value>Üretim transfer satır başarıyla oluşturuldu</value>
   </data>
@@ -1164,9 +1164,9 @@
   <data name="PtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim transfer satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PtLine -->
+  
 
-  <!-- #region PtLineSerial -->
+  
   <data name="PtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -1176,9 +1176,9 @@
   <data name="PtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion PtLineSerial -->
+  
 
-  <!-- #region PtRoute -->
+  
   <data name="PtLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -1209,9 +1209,9 @@
   <data name="PtRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Üretim transfer rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion PtRoute -->
+  
 
-  <!-- #region ShFunction -->
+  
   <data name="ShFunctionOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Sevkiyat açık sipariş başlık bilgileri getirilirken hata oluştu</value>
   </data>
@@ -1224,9 +1224,9 @@
   <data name="ShFunctionOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Sevkiyat açık sipariş satır bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion ShFunction -->
+  
 
-  <!-- #region ShHeader -->
+  
   <data name="ShHeaderApprovalUpdateError" xml:space="preserve">
     <value>Sevkiyat sipariş onayı güncellenirken hata oluştu</value>
   </data>
@@ -1335,9 +1335,9 @@
   <data name="ShHeaderNotificationMessage" xml:space="preserve">
     <value>Sevkiyat emri numarası {0} olan emir size atandı.</value>
   </data>
-  <!-- #endregion ShHeader -->
+  
 
-  <!-- #region ShImportLine -->
+  
   <data name="ShImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat İthalat Satır başarıyla oluşturuldu</value>
   </data>
@@ -1374,9 +1374,9 @@
   <data name="ShImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat İthalat Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion ShImportLine -->
+  
 
-  <!-- #region ShLine -->
+  
   <data name="ShLineCreatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Satır başarıyla oluşturuldu</value>
   </data>
@@ -1404,9 +1404,9 @@
   <data name="ShLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion ShLine -->
+  
 
-  <!-- #region ShLineSerial -->
+  
   <data name="ShLineSerialCreatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Satır Seri başarıyla oluşturuldu</value>
   </data>
@@ -1431,9 +1431,9 @@
   <data name="ShLineSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Satır Seri başarıyla güncellendi</value>
   </data>
-  <!-- #endregion ShLineSerial -->
+  
 
-  <!-- #region ShRoute -->
+  
   <data name="ShLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -1455,9 +1455,9 @@
   <data name="ShRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion ShRoute -->
+  
 
-  <!-- #region ShTerminalLine -->
+  
   <data name="ShTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Terminal Satır başarıyla oluşturuldu</value>
   </data>
@@ -1476,9 +1476,9 @@
   <data name="ShTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sevkiyat Terminal Satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion ShTerminalLine -->
+  
 
-  <!-- #region Sidebar -->
+  
   <data name="MobileUserGroupMatchCreatedSuccessfully" xml:space="preserve">
     <value>Mobil kullanıcı grup eşleşmesi başarıyla oluşturuldu</value>
   </data>
@@ -1653,9 +1653,9 @@
   <data name="SidebarmenuLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sidebar menü satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion Sidebar -->
+  
 
-  <!-- #region SitHeader -->
+  
   <data name="SitHeaderApprovalUpdateError" xml:space="preserve">
     <value>Alt yüklenici çıkış sipariş onayı güncellenirken hata oluştu</value>
   </data>
@@ -1734,9 +1734,9 @@
   <data name="SitHeaderNotificationMessage" xml:space="preserve">
     <value>Alt yüklenici çıkış transfer emri numarası {0} olan emir size atandı.</value>
   </data>
-  <!-- #endregion SitHeader -->
+  
 
-  <!-- #region SitImportLine -->
+  
   <data name="SitImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış transfer import satır başarıyla oluşturuldu</value>
   </data>
@@ -1779,9 +1779,9 @@
   <data name="SitLineImportLinesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion SitImportLine -->
+  
 
-  <!-- #region SitLine -->
+  
   <data name="SitLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış satır başarıyla oluşturuldu</value>
   </data>
@@ -1803,9 +1803,9 @@
   <data name="SitLineUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SitLine -->
+  
 
-  <!-- #region SitLineSerial -->
+  
   <data name="SitLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -1815,9 +1815,9 @@
   <data name="SitLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion SitLineSerial -->
+  
 
-  <!-- #region SitRoute -->
+  
   <data name="SitLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -1830,9 +1830,9 @@
   <data name="SitRouteRetrievedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış rota bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion SitRoute -->
+  
 
-  <!-- #region SitTerminalLine -->
+  
   <data name="SitTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış terminal satır başarıyla oluşturuldu</value>
   </data>
@@ -1851,9 +1851,9 @@
   <data name="SitTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici çıkış terminal satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SitTerminalLine -->
+  
 
-  <!-- #region SrtHeader -->
+  
   <data name="SrtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Alt yüklenici kabul transfer sipariş onayı güncellenirken hata oluştu</value>
   </data>
@@ -1959,9 +1959,9 @@
   <data name="SrtHeaderNotificationMessage" xml:space="preserve">
     <value>Alt yüklenici kabul transfer emri numarası {0} olan emir size atandı.</value>
   </data>
-  <!-- #endregion SrtHeader -->
+  
 
-  <!-- #region SrtImportLine -->
+  
   <data name="SrtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul ithalat satırı başarıyla oluşturuldu</value>
   </data>
@@ -1998,9 +1998,9 @@
   <data name="SrtImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul ithalat satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SrtImportLine -->
+  
 
-  <!-- #region SrtLine -->
+  
   <data name="SrtLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul transfer satır başarıyla oluşturuldu</value>
   </data>
@@ -2028,9 +2028,9 @@
   <data name="SrtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul transfer satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SrtLine -->
+  
 
-  <!-- #region SrtLineSerial -->
+  
   <data name="SrtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -2040,9 +2040,9 @@
   <data name="SrtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion SrtLineSerial -->
+  
 
-  <!-- #region SrtRoute -->
+  
   <data name="SrtLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -2067,9 +2067,9 @@
   <data name="SrtRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SrtRoute -->
+  
 
-  <!-- #region SrtTerminalLine -->
+  
   <data name="SrtTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul terminal satırı başarıyla oluşturuldu</value>
   </data>
@@ -2088,12 +2088,12 @@
   <data name="SrtTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Alt yüklenici kabul terminal satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion SrtTerminalLine -->
+  
 
-  <!-- #region WiFunction -->
-  <!-- #endregion WiFunction -->
+  
+  
 
-  <!-- #region WiHeader -->
+  
   <data name="WiHeaderApprovalUpdateError" xml:space="preserve">
     <value>Depo giriş sipariş onayı güncellenirken hata oluştu</value>
   </data>
@@ -2169,9 +2169,9 @@
   <data name="WiHeaderNotificationMessage" xml:space="preserve">
     <value>Depo giriş emri numarası {0} olan emir size atandı.</value>
   </data>
-  <!-- #endregion WiHeader -->
+  
 
-  <!-- #region WiImportLine -->
+  
   <data name="WiImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Depo giriş ithalat satırı başarıyla oluşturuldu</value>
   </data>
@@ -2208,18 +2208,18 @@
   <data name="WiImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depo giriş ithalat satırı başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WiImportLine -->
+  
 
-  <!-- #region WiLine -->
+  
   <data name="WiLineErrorOccurred" xml:space="preserve">
     <value>Depo giriş satır işlemi sırasında hata oluştu</value>
   </data>
   <data name="WiLineRetrievedSuccessfully" xml:space="preserve">
     <value>Depo giriş satır bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion WiLine -->
+  
 
-  <!-- #region WiLineSerial -->
+  
   <data name="WiLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -2229,27 +2229,27 @@
   <data name="WiLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion WiLineSerial -->
+  
 
-  <!-- #region WiRoute -->
+  
   <data name="WiLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion WiRoute -->
+  
 
-  <!-- #region WiTerminalLine -->
+  
   <data name="WiTerminalLineErrorOccurred" xml:space="preserve">
     <value>Depo giriş terminal satır işlemi sırasında hata oluştu</value>
   </data>
   <data name="WiTerminalLineRetrievedSuccessfully" xml:space="preserve">
     <value>Depo giriş terminal satır bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion WiTerminalLine -->
+  
 
-  <!-- #region WoFunction -->
-  <!-- #endregion WoFunction -->
+  
+  
 
-  <!-- #region WoHeader -->
+  
   <data name="WoHeaderCompletedSuccessfully" xml:space="preserve">
     <value>Depo çıkış başlık başarıyla tamamlandı</value>
   </data>
@@ -2310,9 +2310,9 @@
   <data name="WoHeaderNotificationMessage" xml:space="preserve">
     <value>Depo çıkış emri numarası {0} olan emir size atandı.</value>
   </data>
-  <!-- #endregion WoHeader -->
+  
 
-  <!-- #region WoImportLine -->
+  
   <data name="WoImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış import satır başarıyla oluşturuldu</value>
   </data>
@@ -2349,9 +2349,9 @@
   <data name="WoImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış import satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WoImportLine -->
+  
 
-  <!-- #region WoLine -->
+  
   <data name="WoLineCreatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış satır başarıyla oluşturuldu</value>
   </data>
@@ -2379,9 +2379,9 @@
   <data name="WoLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WoLine -->
+  
 
-  <!-- #region WoLineSerial -->
+  
   <data name="WoLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -2391,9 +2391,9 @@
   <data name="WoLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion WoLineSerial -->
+  
 
-  <!-- #region WoRoute -->
+  
   <data name="WoLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -2424,9 +2424,9 @@
   <data name="WoRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış rota başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WoRoute -->
+  
 
-  <!-- #region WoTerminalLine -->
+  
   <data name="WoTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış terminal satır başarıyla oluşturuldu</value>
   </data>
@@ -2445,9 +2445,9 @@
   <data name="WoTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depo çıkış terminal satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WoTerminalLine -->
+  
 
-  <!-- #region WtFunction -->
+  
   <data name="WtFunctionTransferOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Depolar arası transfer açık sipariş başlık bilgileri getirilirken hata oluştu</value>
   </data>
@@ -2460,9 +2460,9 @@
   <data name="WtFunctionTransferOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer açık sipariş satır bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion WtFunction -->
+  
 
-  <!-- #region WtHeader -->
+  
   <data name="WtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Onay durumu güncellenirken hata oluştu</value>
   </data>
@@ -2568,9 +2568,9 @@
   <data name="WtDoneNotificationMessage" xml:space="preserve">
     <value>{0} numaralı depolar arası transfer emriniz tamamlanmıştır.</value>
   </data>
-  <!-- #endregion WtHeader -->
+  
 
-  <!-- #region WtImportLine -->
+  
   <data name="WtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer import satır başarıyla oluşturuldu</value>
   </data>
@@ -2613,9 +2613,9 @@
   <data name="WtLineImportLinesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion WtImportLine -->
+  
 
-  <!-- #region WtLine -->
+  
   <data name="WtLineCreatedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer satır başarıyla oluşturuldu</value>
   </data>
@@ -2634,9 +2634,9 @@
   <data name="WtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WtLine -->
+  
 
-  <!-- #region WtLineSerial -->
+  
   <data name="WtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Serial silindi; bağlı line soft delete edildi</value>
   </data>
@@ -2646,9 +2646,9 @@
   <data name="WtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
-  <!-- #endregion WtLineSerial -->
+  
 
-  <!-- #region WtRoute -->
+  
   <data name="WtLineSerialRoutesExist" xml:space="preserve">
     <value>Emre toplanmış stokları listeden çıkartmanız gereklidir</value>
   </data>
@@ -2661,9 +2661,9 @@
   <data name="WtRouteRetrievedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer rota bilgileri başarıyla getirildi</value>
   </data>
-  <!-- #endregion WtRoute -->
+  
 
-  <!-- #region WtTerminalLine -->
+  
   <data name="WtTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer terminal satır başarıyla oluşturuldu</value>
   </data>
@@ -2682,9 +2682,9 @@
   <data name="WtTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Depolar arası transfer terminal satır başarıyla güncellendi</value>
   </data>
-  <!-- #endregion WtTerminalLine -->
+  
 
-  <!-- #region Package -->
+  
   <data name="PHeaderRetrievedSuccessfully" xml:space="preserve">
     <value>Paket başlık bilgileri başarıyla getirildi</value>
   </data>
@@ -2811,9 +2811,9 @@
   <data name="PHeaderErrorOccurred" xml:space="preserve">
     <value>Paket başlık işlenirken bir hata oluştu</value>
   </data>
-  <!-- #endregion Package -->
+  
 
-  <!-- #region UserDetail -->
+  
   <data name="UserDetailRetrievedSuccessfully" xml:space="preserve">
     <value>Kullanıcı detayı başarıyla alındı</value>
   </data>
@@ -2877,9 +2877,9 @@
   <data name="ProfilePictureDeletedSuccessfully" xml:space="preserve">
     <value>Profil resmi başarıyla silindi</value>
   </data>
-  <!-- #endregion UserDetail -->
+  
 
-  <!-- #region UserAuthority -->
+  
   <data name="UserAuthorityRetrievedSuccessfully" xml:space="preserve">
     <value>Kullanıcı yetkisi başarıyla getirildi</value>
   </data>
@@ -2898,7 +2898,7 @@
   <data name="UserAuthorityCannotDeleteWhenUsersAssigned" xml:space="preserve">
     <value>Bu role atanmış kullanıcılar olduğu için rol silinemez. Önce kullanıcıların rolünü değiştirin.</value>
   </data>
-  <!-- #endregion UserAuthority -->
+  
 
   <data name="Unauthorized" xml:space="preserve">
     <value>Yetkisiz erişim</value>
@@ -2906,4 +2906,4 @@
   <data name="OnlyUserAndAdminRolesAllowed" xml:space="preserve">
     <value>Yalnızca 'user' ve 'admin' rolleri kullanılabilir</value>
   </data>
-</root>
+<data name="NotificationIdsRequired" xml:space="preserve"><value>Bildirim ID listesi boş olamaz</value></data><data name="NotificationValidRecordsNotFound" xml:space="preserve"><value>Geçerli bildirim bulunamadı</value></data><data name="GrLineMissing" xml:space="preserve"><value>GrLine bulunamadı</value></data><data name="HeaderNotFound" xml:space="preserve"><value>Header bulunamadı</value></data><data name="GrHeaderMissing" xml:space="preserve"><value>GrHeader bulunamadı</value></data><data name="CurrentUserIdNotFoundInToken" xml:space="preserve"><value>Token içinde kullanıcı ID bulunamadı</value></data><data name="UserDetailNotFoundCanCreate" xml:space="preserve"><value>Kullanıcı detayı bulunamadı. Yeni kayıt oluşturabilirsiniz.</value></data><data name="UserWithIdNotFound" xml:space="preserve"><value>ID değeri {0} olan kullanıcı bulunamadı</value></data></root>

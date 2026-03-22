@@ -33,7 +33,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<PagedResponse<NotificationDto>>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -62,7 +62,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<bool>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -90,7 +90,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(400, ApiResponse<bool>.ErrorResult(
                     _localizationService.GetLocalizedString("InvalidModelState"),
-                    "Notification IDs list cannot be empty",
+                    _localizationService.GetLocalizedString("NotificationIdsRequired"),
                     400));
             }
 
@@ -109,4 +109,3 @@ namespace WMS_WEBAPI.Controllers
         }
     }
 }
-

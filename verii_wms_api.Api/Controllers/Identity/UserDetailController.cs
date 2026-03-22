@@ -61,7 +61,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<UserDetailDto>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -70,7 +70,7 @@ namespace WMS_WEBAPI.Controllers
             // If not found, return 200 with null data instead of 404 (frontend can handle this better)
             if (result.StatusCode == 404)
             {
-                return Ok(ApiResponse<UserDetailDto>.SuccessResult(null!, "User detail not found. You can create one."));
+                return Ok(ApiResponse<UserDetailDto>.SuccessResult(null!, _localizationService.GetLocalizedString("UserDetailNotFoundCanCreate")));
             }
             
             return StatusCode(result.StatusCode, result);
@@ -127,7 +127,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<UserDetailDto>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -179,7 +179,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<string>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -270,7 +270,10 @@ namespace WMS_WEBAPI.Controllers
                 var user = await _unitOfWork.Users.GetByIdAsync(userId);
                 if (user == null)
                 {
-                    return Ok(ApiResponse<object>.ErrorResult(_localizationService.GetLocalizedString("UserNotFound"), $"User with ID {userId} not found", 404));
+                    return Ok(ApiResponse<object>.ErrorResult(
+                        _localizationService.GetLocalizedString("UserNotFound"),
+                        string.Format(_localizationService.GetLocalizedString("UserWithIdNotFound"), userId),
+                        404));
                 }
 
                 // Get all UserDetail records for this user
@@ -366,7 +369,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<object>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 
@@ -427,7 +430,7 @@ namespace WMS_WEBAPI.Controllers
             {
                 return StatusCode(401, ApiResponse<bool>.ErrorResult(
                     _localizationService.GetLocalizedString("Unauthorized"),
-                    "User ID not found in token",
+                    _localizationService.GetLocalizedString("CurrentUserIdNotFoundInToken"),
                     401));
             }
 

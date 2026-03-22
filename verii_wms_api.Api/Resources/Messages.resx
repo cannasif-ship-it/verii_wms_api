@@ -1,51 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
+<?xml version='1.0' encoding='utf-8'?>
+<root xmlns:ns1="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:schema id="root">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xs:element name="root" ns1:IsDataSet="true">
+      <xs:complexType>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element name="metadata">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+              <xs:attribute name="type" type="xsd:string" />
+              <xs:attribute name="mimetype" type="xsd:string" />
+              <xs:attribute ref="xml:space" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="assembly">
+            <xs:complexType>
+              <xs:attribute name="alias" type="xsd:string" />
+              <xs:attribute name="name" type="xsd:string" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="data">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" ns1:Ordinal="1" />
+                <xs:element name="comment" type="xsd:string" minOccurs="0" ns1:Ordinal="2" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+              <xs:attribute name="type" type="xsd:string" />
+              <xs:attribute name="mimetype" type="xsd:string" />
+              <xs:attribute ref="xml:space" />
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="resheader">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="value" type="xsd:string" minOccurs="0" ns1:Ordinal="1" />
+              </xs:sequence>
+              <xs:attribute name="name" use="required" type="xsd:string" />
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   
-  <!-- #region AuthService -->
+  
   <data name="AuthErrorOccurred" xml:space="preserve">
     <value>Error occurred during authentication operation</value>
   </data>
@@ -114,9 +114,9 @@
   <data name="UserRegisteredSuccessfully" xml:space="preserve">
     <value>User registered successfully</value>
   </data>
-  <!-- #endregion AuthService -->
+  
 
-  <!-- #region Common -->
+  
   <data name="Created" xml:space="preserve">
     <value>Record created successfully</value>
   </data>
@@ -267,9 +267,9 @@
   <data name="InvalidCorrelationKey" xml:space="preserve">
     <value>Invalid correlation key provided</value>
   </data>
-  <!-- #endregion Common -->
+  
 
-  <!-- #region ErpService -->
+  
   <data name="CariRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving customer information</value>
   </data>
@@ -336,9 +336,9 @@
   <data name="StockWarehouseRetrievedSuccessfully" xml:space="preserve">
     <value>Stock warehouse information retrieved successfully</value>
   </data>
-  <!-- #endregion ErpService -->
+  
 
-  <!-- #region GrFunction -->
+  
   <data name="GoodReciptFunctionsHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving Goods Open Orders Header information</value>
   </data>
@@ -351,9 +351,9 @@
   <data name="GoodReciptFunctionsLineRetrievedSuccessfully" xml:space="preserve">
     <value>Goods Open Orders Line information retrieved successfully</value>
   </data>
-  <!-- #endregion GrFunction -->
+  
 
-  <!-- #region GrHeader -->
+  
   <data name="GrHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating goods receipt order approval</value>
   </data>
@@ -474,9 +474,9 @@
   <data name="GrDoneNotificationMessage" xml:space="preserve">
     <value>Your goods receipt order number {0} has been completed.</value>
   </data>
-  <!-- #endregion GrHeader -->
+  
 
-  <!-- #region GrImportDocument -->
+  
   <data name="GrImportDocumentCreateError" xml:space="preserve">
     <value>Error occurred while creating import document</value>
   </data>
@@ -513,9 +513,9 @@
   <data name="GrImportDocumentUpdatedSuccessfully" xml:space="preserve">
     <value>Import document updated successfully</value>
   </data>
-  <!-- #endregion GrImportDocument -->
+  
 
-  <!-- #region GrImportLine -->
+  
   <data name="GrImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Goods Receipt Import Line created successfully</value>
   </data>
@@ -561,9 +561,9 @@
   <data name="GrImportSerialLineGetByImportLineIdError" xml:space="preserve">
     <value>Error occurred while retrieving Goods Receipt Import Serial Lines by Import Line ID</value>
   </data>
-  <!-- #endregion GrImportLine -->
+  
 
-  <!-- #region GrLine -->
+  
   <data name="GrLineCreateError" xml:space="preserve">
     <value>Error occurred while creating Goods Receipt Line</value>
   </data>
@@ -606,9 +606,9 @@
   <data name="GrLineUpdatedSuccessfully" xml:space="preserve">
     <value>Goods Receipt Line updated successfully</value>
   </data>
-  <!-- #endregion GrLine -->
+  
 
-  <!-- #region GrLineSerial -->
+  
   <data name="GrImportSerialLineCreateError" xml:space="preserve">
     <value>Error occurred while creating Goods Receipt Import Serial Line</value>
   </data>
@@ -645,15 +645,15 @@
   <data name="GrImportSerialLineUpdatedSuccessfully" xml:space="preserve">
     <value>Goods Receipt Import Serial Line updated successfully</value>
   </data>
-  <!-- #endregion GrLineSerial -->
+  
 
-  <!-- #region GrRoute -->
+  
   <data name="GrImportLineRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion GrRoute -->
+  
 
-  <!-- #region GrTerminalLine -->
+  
   <data name="GrTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Goods Receipt Terminal Line created successfully</value>
   </data>
@@ -672,9 +672,9 @@
   <data name="GrTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Goods Receipt Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion GrTerminalLine -->
+  
 
-  <!-- #region IcHeader -->
+  
   <data name="IcHeaderCreatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Header created successfully</value>
   </data>
@@ -696,9 +696,9 @@
   <data name="IcHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Header updated successfully</value>
   </data>
-  <!-- #endregion IcHeader -->
+  
 
-  <!-- #region IcImportLine -->
+  
   <data name="IcImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Import Line created successfully</value>
   </data>
@@ -720,9 +720,9 @@
   <data name="IcImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Import Line updated successfully</value>
   </data>
-  <!-- #endregion IcImportLine -->
+  
 
-  <!-- #region IcRoute -->
+  
   <data name="IcRouteCreatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Route created successfully</value>
   </data>
@@ -741,9 +741,9 @@
   <data name="IcRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Route updated successfully</value>
   </data>
-  <!-- #endregion IcRoute -->
+  
 
-  <!-- #region IcTerminalLine -->
+  
   <data name="IcTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Terminal Line created successfully</value>
   </data>
@@ -762,9 +762,9 @@
   <data name="IcTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Inventory Count Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion IcTerminalLine -->
+  
 
-  <!-- #region JwtService -->
+  
   <data name="TokenGeneratedSuccessfully" xml:space="preserve">
     <value>Token generated successfully</value>
   </data>
@@ -774,9 +774,9 @@
   <data name="TokenGenerationFailedMessage" xml:space="preserve">
     <value>Token generation failed</value>
   </data>
-  <!-- #endregion JwtService -->
+  
 
-  <!-- #region NotificationService -->
+  
   <data name="NotificationBulkCreatedSuccessfully" xml:space="preserve">
     <value>Bulk notifications created successfully</value>
   </data>
@@ -807,9 +807,9 @@
   <data name="NotificationRetrievedSuccessfully" xml:space="preserve">
     <value>Notification information retrieved successfully</value>
   </data>
-  <!-- #endregion NotificationService -->
+  
 
-  <!-- #region PrFunction -->
+  
   <data name="ProductHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving production order header information</value>
   </data>
@@ -822,9 +822,9 @@
   <data name="ProductLinesRetrievedSuccessfully" xml:space="preserve">
     <value>Production order lines retrieved successfully</value>
   </data>
-  <!-- #endregion PrFunction -->
+  
 
-  <!-- #region PrHeader -->
+  
   <data name="PrHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating production order approval</value>
   </data>
@@ -927,9 +927,9 @@
   <data name="PrDoneNotificationMessage" xml:space="preserve">
     <value>Your production order number {0} has been completed.</value>
   </data>
-  <!-- #endregion PrHeader -->
+  
 
-  <!-- #region PrHeaderSerial -->
+  
   <data name="PrHeaderSerialCreatedSuccessfully" xml:space="preserve">
     <value>Production header serial created successfully</value>
   </data>
@@ -948,9 +948,9 @@
   <data name="PrHeaderSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Production header serial updated successfully</value>
   </data>
-  <!-- #endregion PrHeaderSerial -->
+  
 
-  <!-- #region PrImportLine -->
+  
   <data name="PrImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Production Import Line created successfully</value>
   </data>
@@ -987,9 +987,9 @@
   <data name="PrImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Production Import Line updated successfully</value>
   </data>
-  <!-- #endregion PrImportLine -->
+  
 
-  <!-- #region PrLine -->
+  
   <data name="PrLineCreatedSuccessfully" xml:space="preserve">
     <value>Production Line created successfully</value>
   </data>
@@ -1017,9 +1017,9 @@
   <data name="PrLineUpdatedSuccessfully" xml:space="preserve">
     <value>Production Line updated successfully</value>
   </data>
-  <!-- #endregion PrLine -->
+  
 
-  <!-- #region PrLineSerial -->
+  
   <data name="PrLineSerialCreatedSuccessfully" xml:space="preserve">
     <value>Production Line Serial created successfully</value>
   </data>
@@ -1044,9 +1044,9 @@
   <data name="PrLineSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Production Line Serial updated successfully</value>
   </data>
-  <!-- #endregion PrLineSerial -->
+  
 
-  <!-- #region PrRoute -->
+  
   <data name="PrLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -1077,9 +1077,9 @@
   <data name="PrRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Production Route updated successfully</value>
   </data>
-  <!-- #endregion PrRoute -->
+  
 
-  <!-- #region PrTerminalLine -->
+  
   <data name="PrTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Production Terminal Line created successfully</value>
   </data>
@@ -1098,9 +1098,9 @@
   <data name="PrTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Production Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion PrTerminalLine -->
+  
 
-  <!-- #region PtHeader -->
+  
   <data name="PtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating production transfer order approval</value>
   </data>
@@ -1209,9 +1209,9 @@
   <data name="PtDoneNotificationMessage" xml:space="preserve">
     <value>Your production transfer order number {0} has been completed.</value>
   </data>
-  <!-- #endregion PtHeader -->
+  
 
-  <!-- #region PtImportLine -->
+  
   <data name="PtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Production Transfer import line created successfully</value>
   </data>
@@ -1248,9 +1248,9 @@
   <data name="PtImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Production Transfer import line updated successfully</value>
   </data>
-  <!-- #endregion PtImportLine -->
+  
 
-  <!-- #region PtLine -->
+  
   <data name="PtLineCreatedSuccessfully" xml:space="preserve">
     <value>Production Transfer Line created successfully</value>
   </data>
@@ -1278,9 +1278,9 @@
   <data name="PtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Production Transfer Line updated successfully</value>
   </data>
-  <!-- #endregion PtLine -->
+  
 
-  <!-- #region PtLineSerial -->
+  
   <data name="PtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -1290,9 +1290,9 @@
   <data name="PtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion PtLineSerial -->
+  
 
-  <!-- #region PtRoute -->
+  
   <data name="PtLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -1323,9 +1323,9 @@
   <data name="PtRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Production Transfer Route updated successfully</value>
   </data>
-  <!-- #endregion PtRoute -->
+  
 
-  <!-- #region ShFunction -->
+  
   <data name="ShFunctionOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving shipping open order header information</value>
   </data>
@@ -1338,9 +1338,9 @@
   <data name="ShFunctionOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Shipping open order line information retrieved successfully</value>
   </data>
-  <!-- #endregion ShFunction -->
+  
 
-  <!-- #region ShHeader -->
+  
   <data name="ShHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating shipping order approval</value>
   </data>
@@ -1449,9 +1449,9 @@
   <data name="ShHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Header updated successfully</value>
   </data>
-  <!-- #endregion ShHeader -->
+  
 
-  <!-- #region ShImportLine -->
+  
   <data name="ShImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Shipping Import Line created successfully</value>
   </data>
@@ -1488,9 +1488,9 @@
   <data name="ShImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Import Line updated successfully</value>
   </data>
-  <!-- #endregion ShImportLine -->
+  
 
-  <!-- #region ShLine -->
+  
   <data name="ShLineCreatedSuccessfully" xml:space="preserve">
     <value>Shipping Line created successfully</value>
   </data>
@@ -1518,9 +1518,9 @@
   <data name="ShLineUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Line updated successfully</value>
   </data>
-  <!-- #endregion ShLine -->
+  
 
-  <!-- #region ShLineSerial -->
+  
   <data name="ShLineSerialCreatedSuccessfully" xml:space="preserve">
     <value>Shipping Line Serial created successfully</value>
   </data>
@@ -1545,9 +1545,9 @@
   <data name="ShLineSerialUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Line Serial updated successfully</value>
   </data>
-  <!-- #endregion ShLineSerial -->
+  
 
-  <!-- #region ShRoute -->
+  
   <data name="ShLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -1569,9 +1569,9 @@
   <data name="ShRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Route updated successfully</value>
   </data>
-  <!-- #endregion ShRoute -->
+  
 
-  <!-- #region ShTerminalLine -->
+  
   <data name="ShTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Shipping Terminal Line created successfully</value>
   </data>
@@ -1590,9 +1590,9 @@
   <data name="ShTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Shipping Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion ShTerminalLine -->
+  
 
-  <!-- #region Sidebar -->
+  
   <data name="MobileUserGroupMatchCreatedSuccessfully" xml:space="preserve">
     <value>Mobile user group match created successfully</value>
   </data>
@@ -1767,9 +1767,9 @@
   <data name="SidebarmenuLineUpdatedSuccessfully" xml:space="preserve">
     <value>Sidebar menu line updated successfully</value>
   </data>
-  <!-- #endregion Sidebar -->
+  
 
-  <!-- #region SitHeader -->
+  
   <data name="SitHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating subcontracting issue order approval</value>
   </data>
@@ -1848,9 +1848,9 @@
   <data name="SitHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Header updated successfully</value>
   </data>
-  <!-- #endregion SitHeader -->
+  
 
-  <!-- #region SitImportLine -->
+  
   <data name="SitImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Import Line created successfully</value>
   </data>
@@ -1893,9 +1893,9 @@
   <data name="SitLineImportLinesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion SitImportLine -->
+  
 
-  <!-- #region SitLine -->
+  
   <data name="SitLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Line created successfully</value>
   </data>
@@ -1917,9 +1917,9 @@
   <data name="SitLineUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Line updated successfully</value>
   </data>
-  <!-- #endregion SitLine -->
+  
 
-  <!-- #region SitLineSerial -->
+  
   <data name="SitLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -1929,9 +1929,9 @@
   <data name="SitLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion SitLineSerial -->
+  
 
-  <!-- #region SitRoute -->
+  
   <data name="SitLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -1944,9 +1944,9 @@
   <data name="SitRouteRetrievedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Route information retrieved successfully</value>
   </data>
-  <!-- #endregion SitRoute -->
+  
 
-  <!-- #region SitTerminalLine -->
+  
   <data name="SitTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Terminal Line created successfully</value>
   </data>
@@ -1965,9 +1965,9 @@
   <data name="SitTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Issue Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion SitTerminalLine -->
+  
 
-  <!-- #region SrtHeader -->
+  
   <data name="SrtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating subcontracting receipt transfer order approval</value>
   </data>
@@ -2073,9 +2073,9 @@
   <data name="SrtHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer header updated successfully</value>
   </data>
-  <!-- #endregion SrtHeader -->
+  
 
-  <!-- #region SrtImportLine -->
+  
   <data name="SrtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer import line created successfully</value>
   </data>
@@ -2112,9 +2112,9 @@
   <data name="SrtImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer import line updated successfully</value>
   </data>
-  <!-- #endregion SrtImportLine -->
+  
 
-  <!-- #region SrtLine -->
+  
   <data name="SrtLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer Line created successfully</value>
   </data>
@@ -2142,9 +2142,9 @@
   <data name="SrtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer Line updated successfully</value>
   </data>
-  <!-- #endregion SrtLine -->
+  
 
-  <!-- #region SrtLineSerial -->
+  
   <data name="SrtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -2154,9 +2154,9 @@
   <data name="SrtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion SrtLineSerial -->
+  
 
-  <!-- #region SrtRoute -->
+  
   <data name="SrtLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -2181,9 +2181,9 @@
   <data name="SrtRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer route updated successfully</value>
   </data>
-  <!-- #endregion SrtRoute -->
+  
 
-  <!-- #region SrtTerminalLine -->
+  
   <data name="SrtTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer terminal line created successfully</value>
   </data>
@@ -2202,9 +2202,9 @@
   <data name="SrtTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Subcontracting Receipt Transfer terminal line updated successfully</value>
   </data>
-  <!-- #endregion SrtTerminalLine -->
+  
 
-  <!-- #region WiFunction -->
+  
   <data name="WiFunctionOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving Warehouse Inbound open order header information</value>
   </data>
@@ -2217,9 +2217,9 @@
   <data name="WiFunctionOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse Inbound open order line information retrieved successfully</value>
   </data>
-  <!-- #endregion WiFunction -->
+  
 
-  <!-- #region WiHeader -->
+  
   <data name="WiHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating warehouse inbound order approval</value>
   </data>
@@ -2295,9 +2295,9 @@
   <data name="WiHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Inbound Header updated successfully</value>
   </data>
-  <!-- #endregion WiHeader -->
+  
 
-  <!-- #region WiImportLine -->
+  
   <data name="WiImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse import line created successfully</value>
   </data>
@@ -2334,18 +2334,18 @@
   <data name="WiImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse import line updated successfully</value>
   </data>
-  <!-- #endregion WiImportLine -->
+  
 
-  <!-- #region WiLine -->
+  
   <data name="WiLineErrorOccurred" xml:space="preserve">
     <value>Error occurred while processing Warehouse Inbound Line</value>
   </data>
   <data name="WiLineRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse Inbound Line information retrieved successfully</value>
   </data>
-  <!-- #endregion WiLine -->
+  
 
-  <!-- #region WiLineSerial -->
+  
   <data name="WiLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -2355,24 +2355,24 @@
   <data name="WiLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion WiLineSerial -->
+  
 
-  <!-- #region WiRoute -->
+  
   <data name="WiLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion WiRoute -->
+  
 
-  <!-- #region WiTerminalLine -->
+  
   <data name="WiTerminalLineErrorOccurred" xml:space="preserve">
     <value>Error occurred while processing Warehouse Inbound Terminal Line</value>
   </data>
   <data name="WiTerminalLineRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse Inbound Terminal Line information retrieved successfully</value>
   </data>
-  <!-- #endregion WiTerminalLine -->
+  
 
-  <!-- #region WoFunction -->
+  
   <data name="WoFunctionOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving Warehouse Outbound open order header information</value>
   </data>
@@ -2385,9 +2385,9 @@
   <data name="WoFunctionOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound open order line information retrieved successfully</value>
   </data>
-  <!-- #endregion WoFunction -->
+  
 
-  <!-- #region WoHeader -->
+  
   <data name="WoHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating warehouse outbound order approval</value>
   </data>
@@ -2472,9 +2472,9 @@
   <data name="WoHeaderUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Header updated successfully</value>
   </data>
-  <!-- #endregion WoHeader -->
+  
 
-  <!-- #region WoImportLine -->
+  
   <data name="WoImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Import Line created successfully</value>
   </data>
@@ -2511,9 +2511,9 @@
   <data name="WoImportLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Import Line updated successfully</value>
   </data>
-  <!-- #endregion WoImportLine -->
+  
 
-  <!-- #region WoLine -->
+  
   <data name="WoLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Line created successfully</value>
   </data>
@@ -2541,9 +2541,9 @@
   <data name="WoLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Line updated successfully</value>
   </data>
-  <!-- #endregion WoLine -->
+  
 
-  <!-- #region WoLineSerial -->
+  
   <data name="WoLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -2553,9 +2553,9 @@
   <data name="WoLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion WoLineSerial -->
+  
 
-  <!-- #region WoRoute -->
+  
   <data name="WoLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -2586,9 +2586,9 @@
   <data name="WoRouteUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Route updated successfully</value>
   </data>
-  <!-- #endregion WoRoute -->
+  
 
-  <!-- #region WoTerminalLine -->
+  
   <data name="WoTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Terminal Line created successfully</value>
   </data>
@@ -2607,9 +2607,9 @@
   <data name="WoTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Outbound Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion WoTerminalLine -->
+  
 
-  <!-- #region WtFunction -->
+  
   <data name="WtFunctionTransferOpenOrderHeaderRetrievalError" xml:space="preserve">
     <value>Error occurred while retrieving warehouse transfer open order header information</value>
   </data>
@@ -2622,9 +2622,9 @@
   <data name="WtFunctionTransferOpenOrderLineRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse transfer open order line information retrieved successfully</value>
   </data>
-  <!-- #endregion WtFunction -->
+  
 
-  <!-- #region WtHeader -->
+  
   <data name="WtHeaderApprovalUpdateError" xml:space="preserve">
     <value>Error occurred while updating approval status</value>
   </data>
@@ -2730,9 +2730,9 @@
   <data name="WtDoneNotificationMessage" xml:space="preserve">
     <value>Your warehouse transfer order number {0} has been completed.</value>
   </data>
-  <!-- #endregion WtHeader -->
+  
 
-  <!-- #region WtImportLine -->
+  
   <data name="WtImportLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Import Line created successfully</value>
   </data>
@@ -2775,9 +2775,9 @@
   <data name="WtLineImportLinesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion WtImportLine -->
+  
 
-  <!-- #region WtLine -->
+  
   <data name="WtLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Line created successfully</value>
   </data>
@@ -2796,9 +2796,9 @@
   <data name="WtLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Line updated successfully</value>
   </data>
-  <!-- #endregion WtLine -->
+  
 
-  <!-- #region WtLineSerial -->
+  
   <data name="WtLineSerialDeletedAndLineDeleted" xml:space="preserve">
     <value>Line serial deleted; related line soft deleted</value>
   </data>
@@ -2808,9 +2808,9 @@
   <data name="WtLineSerialInsufficientQuantityAfterDelete" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
-  <!-- #endregion WtLineSerial -->
+  
 
-  <!-- #region WtRoute -->
+  
   <data name="WtLineSerialRoutesExist" xml:space="preserve">
     <value>Collected items exist for this order; remove them before deletion</value>
   </data>
@@ -2823,9 +2823,9 @@
   <data name="WtRouteRetrievedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Route information retrieved successfully</value>
   </data>
-  <!-- #endregion WtRoute -->
+  
 
-  <!-- #region WtTerminalLine -->
+  
   <data name="WtTerminalLineCreatedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Terminal Line created successfully</value>
   </data>
@@ -2844,9 +2844,9 @@
   <data name="WtTerminalLineUpdatedSuccessfully" xml:space="preserve">
     <value>Warehouse Transfer Terminal Line updated successfully</value>
   </data>
-  <!-- #endregion WtTerminalLine -->
+  
 
-  <!-- #region Parameter -->
+  
   <data name="ParameterRetrievedSuccessfully" xml:space="preserve">
     <value>Parameter retrieved successfully</value>
   </data>
@@ -2862,9 +2862,9 @@
   <data name="ParameterNotFound" xml:space="preserve">
     <value>Parameter not found</value>
   </data>
-  <!-- #endregion Parameter -->
+  
 
-  <!-- #region Package -->
+  
   <data name="PHeaderRetrievedSuccessfully" xml:space="preserve">
     <value>Package Header information retrieved successfully</value>
   </data>
@@ -2991,9 +2991,9 @@
   <data name="PHeaderErrorOccurred" xml:space="preserve">
     <value>An error occurred while processing Package Header</value>
   </data>
-  <!-- #endregion Package -->
+  
 
-  <!-- #region UserDetail -->
+  
   <data name="UserDetailRetrievedSuccessfully" xml:space="preserve">
     <value>User detail retrieved successfully</value>
   </data>
@@ -3057,9 +3057,9 @@
   <data name="ProfilePictureDeletedSuccessfully" xml:space="preserve">
     <value>Profile picture deleted successfully</value>
   </data>
-  <!-- #endregion UserDetail -->
+  
 
-  <!-- #region UserAuthority -->
+  
   <data name="UserAuthorityRetrievedSuccessfully" xml:space="preserve">
     <value>User authority retrieved successfully</value>
   </data>
@@ -3078,6 +3078,6 @@
   <data name="UserAuthorityCannotDeleteWhenUsersAssigned" xml:space="preserve">
     <value>Cannot delete role because users are assigned to it. Reassign or remove those users first.</value>
   </data>
-  <!-- #endregion UserAuthority -->
+  
 
-</root>
+<data name="NotificationIdsRequired" xml:space="preserve"><value>Notification ID list cannot be empty</value></data><data name="NotificationValidRecordsNotFound" xml:space="preserve"><value>No valid notifications found</value></data><data name="GrLineMissing" xml:space="preserve"><value>GrLine not found</value></data><data name="HeaderNotFound" xml:space="preserve"><value>Header not found</value></data><data name="GrHeaderMissing" xml:space="preserve"><value>GrHeader not found</value></data><data name="CurrentUserIdNotFoundInToken" xml:space="preserve"><value>User ID not found in token</value></data><data name="UserDetailNotFoundCanCreate" xml:space="preserve"><value>User detail not found. You can create one.</value></data><data name="UserWithIdNotFound" xml:space="preserve"><value>User with ID {0} not found</value></data></root>
