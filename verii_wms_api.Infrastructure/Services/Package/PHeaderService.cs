@@ -27,7 +27,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var headers = await _unitOfWork.PHeaders.GetAllAsync();
+                var headers = await _unitOfWork.PHeaders.Query().ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<PHeaderDto>>(headers);
                 
                 var enriched = await _erpService.PopulateCustomerNamesAsync(dtos);
@@ -52,7 +52,7 @@ namespace WMS_WEBAPI.Services
                 if (request.PageNumber < 1) request.PageNumber = 1;
                 if (request.PageSize < 1) request.PageSize = 20;
 
-                var query = _unitOfWork.PHeaders.AsQueryable();
+                var query = _unitOfWork.PHeaders.Query();
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
 
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -83,7 +83,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var header = await _unitOfWork.PHeaders.GetByIdAsync(id);
+                var header = await _unitOfWork.PHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (header == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PHeaderNotFound");
@@ -114,8 +114,8 @@ namespace WMS_WEBAPI.Services
                 if (!string.IsNullOrWhiteSpace(createDto.PackingNo))
                 {
                     var existingHeader = await _unitOfWork.PHeaders
-                        .AsQueryable()
-                        .FirstOrDefaultAsync(h => !h.IsDeleted && h.PackingNo == createDto.PackingNo);
+                        .Query()
+                        .FirstOrDefaultAsync(h => h.PackingNo == createDto.PackingNo);
 
                     if (existingHeader != null)
                     {
@@ -153,7 +153,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var header = await _unitOfWork.PHeaders.GetByIdAsync(id);
+                var header = await _unitOfWork.PHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (header == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PHeaderNotFound");
@@ -184,7 +184,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var header = await _unitOfWork.PHeaders.GetByIdAsync(id);
+                var header = await _unitOfWork.PHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (header == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PHeaderNotFound");
@@ -213,7 +213,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 // 1. Gelen datayı id ile getle ve SourceType al, eğer boş değilse
-                var pHeader = await _unitOfWork.PHeaders.GetByIdAsync(pHeaderId);
+                var pHeader = await _unitOfWork.PHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == pHeaderId);
                 if (pHeader == null)
                 {
                     return ApiResponse<bool>.ErrorResult(
@@ -332,8 +332,8 @@ namespace WMS_WEBAPI.Services
 
                 // 3. PHeaderService.cs (224-227) ile plines var mı kontrolü
                 var plines = await _unitOfWork.PLines
-                    .AsQueryable()
-                    .Where(pl => pl.PackingHeaderId == pHeaderId && !pl.IsDeleted)
+                    .Query(tracking: true)
+                    .Where(pl => pl.PackingHeaderId == pHeaderId)
                     .ToListAsync();
 
                 if (plines.Count == 0)
@@ -374,7 +374,15 @@ namespace WMS_WEBAPI.Services
                         dynamic? sourceHeader = null;
                         if (pHeader.SourceHeaderId.HasValue && headerRepository != null)
                         {
-                            sourceHeader = await headerRepo.GetByIdAsync(pHeader.SourceHeaderId.Value);
+                            var allHeaders = await MaterializeDynamicQueryAsync(headerRepo, tracking: true);
+                            foreach (var candidate in allHeaders)
+                            {
+                                if (candidate != null && (candidate?.Id ?? 0L) == pHeader.SourceHeaderId.Value)
+                                {
+                                    sourceHeader = candidate;
+                                    break;
+                                }
+                            }
                         }
                         if (sourceHeader == null || (sourceHeader?.IsDeleted ?? false))
                         {
@@ -387,8 +395,7 @@ namespace WMS_WEBAPI.Services
 
                         // Parameter'ı al
                         dynamic paramRepo = parameterRepository;
-                        var queryable = paramRepo.AsQueryable();
-                        var allParameters = await Task.Run(() => ((IQueryable)queryable).Cast<dynamic>().ToList());
+                        var allParameters = await MaterializeDynamicQueryAsync(paramRepo);
                         dynamic? parameter = null;
                         foreach (var p in allParameters)
                         {
@@ -409,8 +416,7 @@ namespace WMS_WEBAPI.Services
 
                             // Line'ları StockCode ve YapKod ile eşleştir
                             dynamic lineRepo = lineRepository;
-                            var lineQueryable = lineRepo.AsQueryable();
-                            var allLines = await Task.Run(() => ((IQueryable)lineQueryable).Cast<dynamic>().ToList());
+                            var allLines = await MaterializeDynamicQueryAsync(lineRepo);
                             
                             // Memory'de filtreleme yap
                             var matchingLines = new List<dynamic>();
@@ -448,8 +454,7 @@ namespace WMS_WEBAPI.Services
                                 lineIds.Add((long)line.Id);
                             }
                             dynamic lineSerialsRepo = lineSerialsRepository;
-                            var lineSerialsQueryable = lineSerialsRepo.AsQueryable();
-                            var allLineSerials = await Task.Run(() => ((IQueryable)lineSerialsQueryable).Cast<dynamic>().ToList());
+                            var allLineSerials = await MaterializeDynamicQueryAsync(lineSerialsRepo);
                             
                             // Memory'de filtreleme yap
                             var lineSerials = new List<dynamic>();
@@ -492,8 +497,7 @@ namespace WMS_WEBAPI.Services
                                 
                                 // Route'ları kontrol et
                                 dynamic routeRepo = routeRepository;
-                                var routeQueryable = routeRepo.AsQueryable();
-                                var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable).Cast<dynamic>().ToList());
+                                var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                                 decimal totalRouteQuantity = 0;
                                 foreach (var r in allRoutes)
                                 {
@@ -537,8 +541,7 @@ namespace WMS_WEBAPI.Services
 
                                 // Tüm Route'ların toplam miktarı (eşleşen Line'lar için)
                                 dynamic routeRepo = routeRepository;
-                                var routeQueryable2 = routeRepo.AsQueryable();
-                                var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable2).Cast<dynamic>().ToList());
+                                var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                                 decimal totalRouteQuantity = 0;
                                 foreach (var r in allRoutes)
                                 {
@@ -612,8 +615,7 @@ namespace WMS_WEBAPI.Services
 
                                     // Route toplam miktarı (bu Line'a bağlı ImportLine'ların Route'ları)
                                     dynamic routeRepo = routeRepository;
-                                    var routeQueryable3 = routeRepo.AsQueryable();
-                                    var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable3).Cast<dynamic>().ToList());
+                                    var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                                     decimal routeTotal = 0;
                                     foreach (var r in allRoutes)
                                     {
@@ -655,8 +657,7 @@ namespace WMS_WEBAPI.Services
 
                             // ImportLine bul veya oluştur
                             dynamic importLineRepo = importLineRepository;
-                            var importLineQueryable = importLineRepo.AsQueryable();
-                            var allImportLines = await Task.Run(() => ((IQueryable)importLineQueryable).Cast<dynamic>().ToList());
+                            var allImportLines = await MaterializeDynamicQueryAsync(importLineRepo);
                             
                             // Memory'de filtreleme yap
                             dynamic? existingImportLine = null;
@@ -718,7 +719,15 @@ namespace WMS_WEBAPI.Services
                         dynamic? sourceHeader = null;
                         if (pHeader.SourceHeaderId.HasValue && headerRepository != null)
                         {
-                            sourceHeader = await headerRepo.GetByIdAsync(pHeader.SourceHeaderId.Value);
+                            var allHeaders = await MaterializeDynamicQueryAsync(headerRepo, tracking: true);
+                            foreach (var candidate in allHeaders)
+                            {
+                                if (candidate != null && (candidate?.Id ?? 0L) == pHeader.SourceHeaderId.Value)
+                                {
+                                    sourceHeader = candidate;
+                                    break;
+                                }
+                            }
                         }
                         
                         // Source header var olmalı, silinmemiş ve tamamlanmamış olmalı
@@ -739,7 +748,16 @@ namespace WMS_WEBAPI.Services
                                 {
                                     // Dynamic kullanarak route repository'nin SoftDelete metodunu çağır
                                     dynamic routeRepo = routeRepository;
-                                    dynamic? route = await routeRepo.GetByIdAsync(pline.SourceRouteId.Value);
+                                    dynamic? route = null;
+                                    var allRoutes = await MaterializeDynamicQueryAsync(routeRepo, tracking: true);
+                                    foreach (var candidate in allRoutes)
+                                    {
+                                        if (candidate != null && (candidate?.Id ?? 0L) == pline.SourceRouteId.Value)
+                                        {
+                                            route = candidate;
+                                            break;
+                                        }
+                                    }
                                     if (route != null)
                                     {
                                         bool isDeleted = route.IsDeleted ?? false;
@@ -793,8 +811,8 @@ namespace WMS_WEBAPI.Services
 
                 // PHeader tablosunda bu SourceType ile eşleşmiş header ID'lerini al
                 var mappedHeaderIds = await _unitOfWork.PHeaders
-                    .AsQueryable()
-                    .Where(ph => !ph.IsDeleted && ph.SourceType == sourceType && ph.SourceHeaderId.HasValue)
+                    .Query()
+                    .Where(ph => ph.SourceType == sourceType && ph.SourceHeaderId.HasValue)
                     .Select(ph => ph.SourceHeaderId!.Value)
                     .ToListAsync();
 
@@ -829,8 +847,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableGrHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.GrHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<GrHeaderDto>>(headers);
@@ -841,8 +859,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableWtHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.WtHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<WtHeaderDto>>(headers);
@@ -853,8 +871,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableShHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.ShHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<ShHeaderDto>>(headers);
@@ -865,8 +883,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailablePrHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.PrHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<PrHeaderDto>>(headers);
@@ -876,8 +894,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailablePtHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.PtHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<PtHeaderDto>>(headers);
@@ -887,8 +905,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableSitHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.SitHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<SitHeaderDto>>(headers);
@@ -898,8 +916,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableSrtHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.SrtHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(headers);
@@ -909,8 +927,8 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableWiHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.WiHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<WiHeaderDto>>(headers);
@@ -921,13 +939,19 @@ namespace WMS_WEBAPI.Services
         private async Task<IEnumerable<object>> GetAvailableWoHeadersAsync(List<long> mappedHeaderIds)
         {
             var headers = await _unitOfWork.WoHeaders
-                .AsQueryable()
-                .Where(h => !h.IsDeleted && !mappedHeaderIds.Contains(h.Id))
+                .Query()
+                .Where(h => !mappedHeaderIds.Contains(h.Id))
                 .ToListAsync();
 
             var dtos = _mapper.Map<IEnumerable<WoHeaderDto>>(headers);
             var enriched = await _erpService.PopulateCustomerNamesAsync(dtos);
             return enriched.Data?.Cast<object>() ?? dtos.Cast<object>();
+        }
+
+        private static Task<List<dynamic>> MaterializeDynamicQueryAsync(dynamic repository, bool tracking = false, bool ignoreQueryFilters = false)
+        {
+            IQueryable queryable = repository.Query(tracking, ignoreQueryFilters);
+            return Task.Run(() => queryable.Cast<dynamic>().ToList());
         }
     }
 }

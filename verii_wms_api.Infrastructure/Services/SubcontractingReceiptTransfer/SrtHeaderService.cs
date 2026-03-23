@@ -33,7 +33,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var branchCode = _httpContextAccessor.HttpContext?.Items["BranchCode"] as string ?? "0";
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => !x.IsDeleted && x.BranchCode == branchCode);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.BranchCode == branchCode).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -61,7 +61,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var branchCode = _httpContextAccessor.HttpContext?.Items["BranchCode"] as string ?? "0";
-                var query = _unitOfWork.SrtHeaders.AsQueryable().Where(x => !x.IsDeleted && x.BranchCode == branchCode);
+                var query = _unitOfWork.SrtHeaders.Query().Where(x => x.BranchCode == branchCode);
 
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -98,7 +98,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.SrtHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("SrtHeaderNotFound");
@@ -129,7 +129,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => x.BranchCode == branchCode && !x.IsDeleted);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.BranchCode == branchCode).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -157,7 +157,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var branchCode = _httpContextAccessor.HttpContext?.Items["BranchCode"] as string ?? "0";
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => x.PlannedDate >= startDate && x.PlannedDate <= endDate && !x.IsDeleted && x.BranchCode == branchCode);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.PlannedDate >= startDate && x.PlannedDate <= endDate && x.BranchCode == branchCode).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -186,7 +186,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var branchCode = _httpContextAccessor.HttpContext?.Items["BranchCode"] as string ?? "0";
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => x.CustomerCode == customerCode && !x.IsDeleted && x.BranchCode == branchCode);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.CustomerCode == customerCode && x.BranchCode == branchCode).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -212,7 +212,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => x.DocumentType == documentType && !x.IsDeleted);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.DocumentType == documentType).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -238,7 +238,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entities = await _unitOfWork.SrtHeaders.FindAsync(x => x.ERPReferenceNumber == documentNo && !x.IsDeleted);
+                var entities = await _unitOfWork.SrtHeaders.Query().Where(x => x.ERPReferenceNumber == documentNo).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<SrtHeaderDto>>(entities);
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
                 if (!enrichedCustomer.Success)
@@ -298,8 +298,8 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtHeaders.GetByIdAsync(id);
-                if (entity == null || entity.IsDeleted)
+                var entity = await _unitOfWork.SrtHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
+                if (entity == null)
                 {
                     var nf = _localizationService.GetLocalizedString("SrtHeaderNotFound");
                     return ApiResponse<SrtHeaderDto>.ErrorResult(nf, nf, 404);
@@ -321,7 +321,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var importLines = await _unitOfWork.SrtImportLines.FindAsync(x => x.HeaderId == id && !x.IsDeleted);
+                var importLines = await _unitOfWork.SrtImportLines.Query().Where(x => x.HeaderId == id).ToListAsync();
                 if (importLines.Any())
                 {
                     var msg = _localizationService.GetLocalizedString("SrtHeaderImportLinesExist");
@@ -341,8 +341,8 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtHeaders.GetByIdAsync(id);
-                if (entity == null || entity.IsDeleted)
+                var entity = await _unitOfWork.SrtHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
+                if (entity == null)
                 {
                     var notFound = _localizationService.GetLocalizedString("SrtHeaderNotFound");
                     return ApiResponse<bool>.ErrorResult(notFound, notFound, 404);
@@ -352,8 +352,7 @@ namespace WMS_WEBAPI.Services
                 // CHECK ERP APPROVAL REQUIREMENT
                 // ============================================
                 var srtParameter = await _unitOfWork.SrtParameters
-                    .AsQueryable()
-                    .Where(p => !p.IsDeleted)
+                    .Query()
                     .FirstOrDefaultAsync();
 
                 // ============================================
@@ -370,23 +369,22 @@ namespace WMS_WEBAPI.Services
                 if (!skipValidation)
                 {
                     var lines = await _unitOfWork.SrtLines
-                        .AsQueryable()
-                        .Where(l => l.HeaderId == id && !l.IsDeleted)
+                        .Query()
+                        .Where(l => l.HeaderId == id)
                         .ToListAsync();
 
                     foreach (var line in lines)
                     {
                         // Get total quantity of LineSerials for this Line
                         var totalLineSerialQuantity = await _unitOfWork.SrtLineSerials
-                            .AsQueryable()
-                            .Where(ls => !ls.IsDeleted && ls.LineId == line.Id)
+                            .Query()
+                            .Where(ls => ls.LineId == line.Id)
                             .SumAsync(ls => ls.Quantity);
 
                         // Get total quantity of Routes for ImportLines linked to this Line
                         var totalRouteQuantity = await _unitOfWork.SrtRoutes
-                            .AsQueryable()
-                            .Where(r => !r.IsDeleted 
-                                && r.ImportLine.LineId == line.Id 
+                            .Query()
+                            .Where(r => r.ImportLine.LineId == line.Id 
                                 && !r.ImportLine.IsDeleted)
                             .SumAsync(r => r.Quantity);
 
@@ -496,8 +494,8 @@ namespace WMS_WEBAPI.Services
                     _unitOfWork.SrtHeaders.Update(entity);
 
                     // Update package status to Shipped
-                    var package = _unitOfWork.PHeaders.AsQueryable()
-                        .Where(p => p.SourceHeaderId == entity.Id && !p.IsDeleted && p.SourceType == PHeaderSourceType.SRT)
+                    var package = _unitOfWork.PHeaders.Query(tracking: true)
+                        .Where(p => p.SourceHeaderId == entity.Id && p.SourceType == PHeaderSourceType.SRT)
                         .FirstOrDefault();
                     if (package != null)
                     {
@@ -561,14 +559,12 @@ namespace WMS_WEBAPI.Services
                 // SQL'de daha verimli bir sorgu üretir ve Distinct() gerektirmez
                 // Header ve TerminalLine'ın silinmemiş olduğunu kontrol eder
                 var query = _unitOfWork.SrtHeaders
-                    .AsQueryable()
-                    .Where(h => !h.IsDeleted 
-                        && !h.IsCompleted 
+                    .Query()
+                    .Where(h => !h.IsCompleted 
                         && h.BranchCode == branchCode
                         && _unitOfWork.SrtTerminalLines
-                            .AsQueryable()
+                            .Query(false, false)
                             .Any(t => t.HeaderId == h.Id 
-                                && !t.IsDeleted 
                                 && t.TerminalUserId == userId));
 
                 var entities = await query.ToListAsync();
@@ -597,8 +593,8 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var query = _unitOfWork.SrtHeaders.AsQueryable()
-                    .Where(x => !x.IsDeleted && x.IsCompleted && x.IsPendingApproval && !x.IsERPIntegrated && x.ApprovalStatus == null);
+                var query = _unitOfWork.SrtHeaders.Query()
+                    .Where(x => x.IsCompleted && x.IsPendingApproval && !x.IsERPIntegrated && x.ApprovalStatus == null);
 
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -635,7 +631,9 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var lines = await _unitOfWork.SrtLines
-                    .FindAsync(x => x.HeaderId == headerId && !x.IsDeleted);
+                    .Query()
+                    .Where(x => x.HeaderId == headerId)
+                    .ToListAsync();
 
                 var lineIds = lines.Select(l => l.Id).ToList();
 
@@ -643,11 +641,15 @@ namespace WMS_WEBAPI.Services
                 if (lineIds.Count > 0)
                 {
                     lineSerials = await _unitOfWork.SrtLineSerials
-                        .FindAsync(x => lineIds.Contains(x.LineId) && !x.IsDeleted);
+                        .Query()
+                        .Where(x => lineIds.Contains(x.LineId))
+                        .ToListAsync();
                 }
 
                 var importLines = await _unitOfWork.SrtImportLines
-                    .FindAsync(x => x.HeaderId == headerId && !x.IsDeleted);
+                    .Query()
+                    .Where(x => x.HeaderId == headerId)
+                    .ToListAsync();
 
                 var importLineIds = importLines.Select(il => il.Id).ToList();
 
@@ -655,7 +657,9 @@ namespace WMS_WEBAPI.Services
                 if (importLineIds.Count > 0)
                 {
                     routes = await _unitOfWork.SrtRoutes
-                        .FindAsync(x => importLineIds.Contains(x.ImportLineId) && !x.IsDeleted);
+                        .Query()
+                        .Where(x => importLineIds.Contains(x.ImportLineId))
+                        .ToListAsync();
                 }
 
                 var lineDtos = _mapper.Map<IEnumerable<SrtLineDto>>(lines);
@@ -702,8 +706,8 @@ namespace WMS_WEBAPI.Services
             {
                 // Tracking ile yükle (navigation property'ler yüklenmeyecek)
                 var entity = await _unitOfWork.SrtHeaders
-                    .AsQueryable()
-                    .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
+                    .Query(tracking: true)
+                    .FirstOrDefaultAsync(e => e.Id == id);
                     
                 if (entity == null)
                 {
@@ -901,8 +905,7 @@ namespace WMS_WEBAPI.Services
                         // 1.1. CHECK ERP APPROVAL REQUIREMENT
                         // ============================================
                         var srtParameter = await _unitOfWork.SrtParameters
-                            .AsQueryable()
-                            .Where(p => !p.IsDeleted)
+                            .Query()
                             .FirstOrDefaultAsync();
 
                         // ============================================

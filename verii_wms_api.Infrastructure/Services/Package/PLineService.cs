@@ -27,7 +27,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var lines = await _unitOfWork.PLines.GetAllAsync();
+                var lines = await _unitOfWork.PLines.Query().ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<PLineDto>>(lines);
                 
                 var enriched = await _erpService.PopulateStockNamesAsync(dtos);
@@ -52,7 +52,7 @@ namespace WMS_WEBAPI.Services
                 if (request.PageNumber < 1) request.PageNumber = 1;
                 if (request.PageSize < 1) request.PageSize = 20;
 
-                var query = _unitOfWork.PLines.AsQueryable();
+                var query = _unitOfWork.PLines.Query();
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
 
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -83,7 +83,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var line = await _unitOfWork.PLines.GetByIdAsync(id);
+                var line = await _unitOfWork.PLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (line == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PLineNotFound");
@@ -110,7 +110,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var lines = await _unitOfWork.PLines.FindAsync(x => x.PackageId == packageId && !x.IsDeleted);
+                var lines = await _unitOfWork.PLines.Query().Where(x => x.PackageId == packageId).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<PLineDto>>(lines);
                 
                 var enriched = await _erpService.PopulateStockNamesAsync(dtos);
@@ -132,7 +132,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var lines = await _unitOfWork.PLines.FindAsync(x => x.PackingHeaderId == packingHeaderId && !x.IsDeleted);
+                var lines = await _unitOfWork.PLines.Query().Where(x => x.PackingHeaderId == packingHeaderId).ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<PLineDto>>(lines);
                 
                 var enriched = await _erpService.PopulateStockNamesAsync(dtos);
@@ -155,16 +155,16 @@ namespace WMS_WEBAPI.Services
             try
             {
                 // Validate PackingHeader exists
-                var header = await _unitOfWork.PHeaders.GetByIdAsync(createDto.PackingHeaderId);
-                if (header == null || header.IsDeleted)
+                var header = await _unitOfWork.PHeaders.Query().FirstOrDefaultAsync(x => x.Id == createDto.PackingHeaderId);
+                if (header == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PHeaderNotFound");
                     return ApiResponse<PLineDto>.ErrorResult(nf, nf, 404);
                 }
 
                 // Validate Package exists
-                var package = await _unitOfWork.PPackages.GetByIdAsync(createDto.PackageId);
-                if (package == null || package.IsDeleted)
+                var package = await _unitOfWork.PPackages.Query().FirstOrDefaultAsync(x => x.Id == createDto.PackageId);
+                if (package == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PPackageNotFound");
                     return ApiResponse<PLineDto>.ErrorResult(nf, nf, 404);
@@ -296,7 +296,16 @@ namespace WMS_WEBAPI.Services
 
                         // SourceHeader kontrolü
                         dynamic headerRepo = headerRepository;
-                        dynamic? sourceHeader = await headerRepo.GetByIdAsync(header.SourceHeaderId.Value);
+                        dynamic? sourceHeader = null;
+                        var sourceHeaders = await MaterializeDynamicQueryAsync(headerRepo, tracking: true);
+                        foreach (var candidate in sourceHeaders)
+                        {
+                            if (candidate != null && (candidate?.Id ?? 0L) == header.SourceHeaderId.Value)
+                            {
+                                sourceHeader = candidate;
+                                break;
+                            }
+                        }
                         
                         if (sourceHeader == null || (sourceHeader?.IsDeleted ?? false) || (sourceHeader?.IsCompleted ?? false))
                         {
@@ -309,8 +318,7 @@ namespace WMS_WEBAPI.Services
 
                         // Parameter'ı al
                         dynamic paramRepo = parameterRepository;
-                        var queryable = paramRepo.AsQueryable();
-                        var allParameters = await Task.Run(() => ((IQueryable)queryable).Cast<dynamic>().ToList());
+                        var allParameters = await MaterializeDynamicQueryAsync(paramRepo);
                         dynamic? parameter = null;
                         foreach (var p in allParameters)
                         {
@@ -328,8 +336,7 @@ namespace WMS_WEBAPI.Services
                         var lineYapKod = (line.YapKod ?? "").Trim();
 
                         dynamic lineRepo = lineRepository;
-                        var lineQueryable = lineRepo.AsQueryable();
-                        var allLines = await Task.Run(() => ((IQueryable)lineQueryable).Cast<dynamic>().ToList());
+                        var allLines = await MaterializeDynamicQueryAsync(lineRepo);
                         
                         var matchingLines = new List<dynamic>();
                         foreach (var l in allLines)
@@ -366,8 +373,7 @@ namespace WMS_WEBAPI.Services
                         }
 
                         dynamic lineSerialsRepo = lineSerialsRepository;
-                        var lineSerialsQueryable = lineSerialsRepo.AsQueryable();
-                        var allLineSerials = await Task.Run(() => ((IQueryable)lineSerialsQueryable).Cast<dynamic>().ToList());
+                        var allLineSerials = await MaterializeDynamicQueryAsync(lineSerialsRepo);
                         
                         var lineSerials = new List<dynamic>();
                         foreach (var ls in allLineSerials)
@@ -405,8 +411,7 @@ namespace WMS_WEBAPI.Services
                             }
                             
                             dynamic routeRepo = routeRepository;
-                            var routeQueryable = routeRepo.AsQueryable();
-                            var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable).Cast<dynamic>().ToList());
+                            var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                             decimal totalRouteQuantity = 0;
                             foreach (var r in allRoutes)
                             {
@@ -444,8 +449,7 @@ namespace WMS_WEBAPI.Services
                             }
 
                             dynamic routeRepo = routeRepository;
-                            var routeQueryable2 = routeRepo.AsQueryable();
-                            var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable2).Cast<dynamic>().ToList());
+                            var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                             decimal totalRouteQuantity = 0;
                             foreach (var r in allRoutes)
                             {
@@ -511,8 +515,7 @@ namespace WMS_WEBAPI.Services
                                 }
 
                                 dynamic routeRepo = routeRepository;
-                                var routeQueryable3 = routeRepo.AsQueryable();
-                                var allRoutes = await Task.Run(() => ((IQueryable)routeQueryable3).Cast<dynamic>().ToList());
+                                var allRoutes = await MaterializeDynamicQueryAsync(routeRepo);
                                 decimal routeTotal = 0;
                                 foreach (var r in allRoutes)
                                 {
@@ -551,8 +554,7 @@ namespace WMS_WEBAPI.Services
 
                         // ImportLine bul veya oluştur
                         dynamic importLineRepo = importLineRepository;
-                        var importLineQueryable = importLineRepo.AsQueryable();
-                        var allImportLines = await Task.Run(() => ((IQueryable)importLineQueryable).Cast<dynamic>().ToList());
+                        var allImportLines = await MaterializeDynamicQueryAsync(importLineRepo);
                         
                         dynamic? existingImportLine = null;
                         foreach (var il in allImportLines)
@@ -633,7 +635,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var line = await _unitOfWork.PLines.GetByIdAsync(id);
+                var line = await _unitOfWork.PLines.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (line == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PLineNotFound");
@@ -664,7 +666,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var line = await _unitOfWork.PLines.GetByIdAsync(id);
+                var line = await _unitOfWork.PLines.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (line == null)
                 {
                     var nf = _localizationService.GetLocalizedString("PLineNotFound");
@@ -672,7 +674,7 @@ namespace WMS_WEBAPI.Services
                 }
 
                 // PHeader kontrolü - SourceType ve SourceRouteId kontrolü
-                var packingHeader = await _unitOfWork.PHeaders.GetByIdAsync(line.PackingHeaderId);
+                var packingHeader = await _unitOfWork.PHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == line.PackingHeaderId);
                 bool shouldRetireRoute = false;
                 string? sourceType = null;
                 long? routeIdToRetire = null;
@@ -693,72 +695,72 @@ namespace WMS_WEBAPI.Services
                         switch (sourceType.ToUpperInvariant())
                         {
                             case PHeaderSourceType.GR:
-                                var grRoute = await _unitOfWork.GrRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (grRoute != null && !grRoute.IsDeleted)
+                                var grRoute = await _unitOfWork.GrRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (grRoute != null)
                                 {
                                     await _unitOfWork.GrRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.WT:
-                                var wtRoute = await _unitOfWork.WtRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (wtRoute != null && !wtRoute.IsDeleted)
+                                var wtRoute = await _unitOfWork.WtRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (wtRoute != null)
                                 {
                                     await _unitOfWork.WtRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.WO:
-                                var woRoute = await _unitOfWork.WoRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (woRoute != null && !woRoute.IsDeleted)
+                                var woRoute = await _unitOfWork.WoRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (woRoute != null)
                                 {
                                     await _unitOfWork.WoRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.WI:
-                                var wiRoute = await _unitOfWork.WiRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (wiRoute != null && !wiRoute.IsDeleted)
+                                var wiRoute = await _unitOfWork.WiRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (wiRoute != null)
                                 {
                                     await _unitOfWork.WiRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.SH:
-                                var shRoute = await _unitOfWork.ShRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (shRoute != null && !shRoute.IsDeleted)
+                                var shRoute = await _unitOfWork.ShRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (shRoute != null)
                                 {
                                     await _unitOfWork.ShRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.PR:
-                                var prRoute = await _unitOfWork.PrRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (prRoute != null && !prRoute.IsDeleted)
+                                var prRoute = await _unitOfWork.PrRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (prRoute != null)
                                 {
                                     await _unitOfWork.PrRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.PT:
-                                var ptRoute = await _unitOfWork.PtRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (ptRoute != null && !ptRoute.IsDeleted)
+                                var ptRoute = await _unitOfWork.PtRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (ptRoute != null)
                                 {
                                     await _unitOfWork.PtRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.SIT:
-                                var sitRoute = await _unitOfWork.SitRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (sitRoute != null && !sitRoute.IsDeleted)
+                                var sitRoute = await _unitOfWork.SitRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (sitRoute != null)
                                 {
                                     await _unitOfWork.SitRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
                                 break;
 
                             case PHeaderSourceType.SRT:
-                                var srtRoute = await _unitOfWork.SrtRoutes.GetByIdAsync(routeIdToRetire.Value);
-                                if (srtRoute != null && !srtRoute.IsDeleted)
+                                var srtRoute = await _unitOfWork.SrtRoutes.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == routeIdToRetire.Value);
+                                if (srtRoute != null)
                                 {
                                     await _unitOfWork.SrtRoutes.SoftDelete(routeIdToRetire.Value);
                                 }
@@ -788,6 +790,12 @@ namespace WMS_WEBAPI.Services
             {
                 return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("PLineSoftDeletionError"), ex.Message, 500);
             }
+        }
+
+        private static Task<List<dynamic>> MaterializeDynamicQueryAsync(dynamic repository, bool tracking = false, bool ignoreQueryFilters = false)
+        {
+            IQueryable queryable = repository.Query(tracking, ignoreQueryFilters);
+            return Task.Run(() => queryable.Cast<dynamic>().ToList());
         }
 
     }

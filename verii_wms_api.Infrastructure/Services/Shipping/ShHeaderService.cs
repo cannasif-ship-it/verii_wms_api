@@ -32,7 +32,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entities = await _unitOfWork.ShHeaders.GetAllAsync();
+                var entities = await _unitOfWork.ShHeaders.Query().ToListAsync();
                 var dtos = _mapper.Map<IEnumerable<ShHeaderDto>>(entities);
 
                 var enrichedCustomer = await _erpService.PopulateCustomerNamesAsync(dtos);
@@ -65,8 +65,8 @@ namespace WMS_WEBAPI.Services
                 if (request.PageSize < 1) request.PageSize = 20;
 
                 var branchCode = _httpContextAccessor.HttpContext?.Items["BranchCode"] as string ?? "0";
-                var query = _unitOfWork.ShHeaders.AsQueryable()
-                    .Where(x => !x.IsDeleted && x.BranchCode == branchCode);
+                var query = _unitOfWork.ShHeaders.Query()
+                    .Where(x => x.BranchCode == branchCode);
 
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -107,7 +107,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.ShHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.ShHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var nf = _localizationService.GetLocalizedString("ShHeaderNotFound");
@@ -154,7 +154,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var existing = await _unitOfWork.ShHeaders.GetByIdAsync(id);
+                var existing = await _unitOfWork.ShHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (existing == null)
                 {
                     var nf = _localizationService.GetLocalizedString("ShHeaderNotFound");
@@ -176,13 +176,13 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var existing = await _unitOfWork.ShHeaders.GetByIdAsync(id);
+                var existing = await _unitOfWork.ShHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (existing == null)
                 {
                     var nf = _localizationService.GetLocalizedString("ShHeaderNotFound");
                     return ApiResponse<bool>.ErrorResult(nf, nf, 404);
                 }
-                var importLines = await _unitOfWork.ShImportLines.FindAsync(x => x.HeaderId == id && !x.IsDeleted);
+                var importLines = await _unitOfWork.ShImportLines.Query().Where(x => x.HeaderId == id).ToListAsync();
                 if (importLines.Any())
                 {
                     var msg = _localizationService.GetLocalizedString("ShHeaderImportLinesExist");
@@ -203,7 +203,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.ShHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.ShHeaders.Query(tracking: true).FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("ShHeaderNotFound");
@@ -214,8 +214,7 @@ namespace WMS_WEBAPI.Services
                 // CHECK ERP APPROVAL REQUIREMENT
                 // ============================================
                 var shParameter = await _unitOfWork.ShParameters
-                    .AsQueryable()
-                    .Where(p => !p.IsDeleted)
+                    .Query()
                     .FirstOrDefaultAsync();
 
                 // ============================================
@@ -232,23 +231,22 @@ namespace WMS_WEBAPI.Services
                 if (!skipValidation)
                 {
                     var lines = await _unitOfWork.ShLines
-                        .AsQueryable()
-                        .Where(l => l.HeaderId == id && !l.IsDeleted)
+                        .Query()
+                        .Where(l => l.HeaderId == id)
                         .ToListAsync();
 
                     foreach (var line in lines)
                     {
                         // Get total quantity of LineSerials for this Line
                         var totalLineSerialQuantity = await _unitOfWork.ShLineSerials
-                            .AsQueryable()
-                            .Where(ls => !ls.IsDeleted && ls.LineId == line.Id)
+                            .Query()
+                            .Where(ls => ls.LineId == line.Id)
                             .SumAsync(ls => ls.Quantity);
 
                         // Get total quantity of Routes for ImportLines linked to this Line
                         var totalRouteQuantity = await _unitOfWork.ShRoutes
-                            .AsQueryable()
-                            .Where(r => !r.IsDeleted 
-                                && r.ImportLine.LineId == line.Id 
+                            .Query()
+                            .Where(r => r.ImportLine.LineId == line.Id 
                                 && !r.ImportLine.IsDeleted)
                             .SumAsync(r => r.Quantity);
 
@@ -358,8 +356,8 @@ namespace WMS_WEBAPI.Services
                     _unitOfWork.ShHeaders.Update(entity);
 
                     // Update package status to Shipped
-                    var package = _unitOfWork.PHeaders.AsQueryable()
-                        .Where(p => p.SourceHeaderId == entity.Id && !p.IsDeleted && p.SourceType == PHeaderSourceType.SH)
+                    var package = _unitOfWork.PHeaders.Query(tracking: true)
+                        .Where(p => p.SourceHeaderId == entity.Id && p.SourceType == PHeaderSourceType.SH)
                         .FirstOrDefault();
                     if (package != null)
                     {
@@ -423,14 +421,12 @@ namespace WMS_WEBAPI.Services
                 // SQL'de daha verimli bir sorgu üretir ve Distinct() gerektirmez
                 // Header ve TerminalLine'ın silinmemiş olduğunu kontrol eder
                 var query = _unitOfWork.ShHeaders
-                    .AsQueryable()
-                    .Where(h => !h.IsDeleted 
-                        && !h.IsCompleted 
+                    .Query()
+                    .Where(h => !h.IsCompleted 
                         && h.BranchCode == branchCode
                         && _unitOfWork.ShTerminalLines
-                            .AsQueryable()
+                            .Query(false, false)
                             .Any(t => t.HeaderId == h.Id 
-                                && !t.IsDeleted 
                                 && t.TerminalUserId == userId));
 
                 var entities = await query.ToListAsync();
@@ -460,7 +456,9 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var lines = await _unitOfWork.ShLines
-                    .FindAsync(x => x.HeaderId == headerId && !x.IsDeleted);
+                    .Query()
+                    .Where(x => x.HeaderId == headerId)
+                    .ToListAsync();
 
                 var lineIds = lines.Select(l => l.Id).ToList();
 
@@ -468,11 +466,15 @@ namespace WMS_WEBAPI.Services
                 if (lineIds.Count > 0)
                 {
                     lineSerials = await _unitOfWork.ShLineSerials
-                        .FindAsync(x => lineIds.Contains(x.LineId) && !x.IsDeleted);
+                        .Query()
+                        .Where(x => lineIds.Contains(x.LineId))
+                        .ToListAsync();
                 }
 
                 var importLines = await _unitOfWork.ShImportLines
-                    .FindAsync(x => x.HeaderId == headerId && !x.IsDeleted);
+                    .Query()
+                    .Where(x => x.HeaderId == headerId)
+                    .ToListAsync();
 
                 var importLineIds = importLines.Select(il => il.Id).ToList();
 
@@ -480,7 +482,9 @@ namespace WMS_WEBAPI.Services
                 if (importLineIds.Count > 0)
                 {
                     routes = await _unitOfWork.ShRoutes
-                        .FindAsync(x => importLineIds.Contains(x.ImportLineId) && !x.IsDeleted);
+                        .Query()
+                        .Where(x => importLineIds.Contains(x.ImportLineId))
+                        .ToListAsync();
                 }
 
                 var lineDtos = _mapper.Map<IEnumerable<ShLineDto>>(lines);
@@ -527,8 +531,8 @@ namespace WMS_WEBAPI.Services
             {
                 // Tracking ile yükle (navigation property'ler yüklenmeyecek)
                 var entity = await _unitOfWork.ShHeaders
-                    .AsQueryable()
-                    .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
+                    .Query(tracking: true)
+                    .FirstOrDefaultAsync(e => e.Id == id);
                     
                 if (entity == null)
                 {
@@ -571,8 +575,8 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var query = _unitOfWork.ShHeaders.AsQueryable()
-                    .Where(x => !x.IsDeleted && x.IsCompleted && x.IsPendingApproval && !x.IsERPIntegrated && x.ApprovalStatus == null);
+                var query = _unitOfWork.ShHeaders.Query()
+                    .Where(x => x.IsCompleted && x.IsPendingApproval && !x.IsERPIntegrated && x.ApprovalStatus == null);
 
                 query = query.ApplyFilters(request.Filters, request.FilterLogic);
                 bool desc = string.Equals(request.SortDirection, "desc", StringComparison.OrdinalIgnoreCase);
@@ -764,8 +768,7 @@ namespace WMS_WEBAPI.Services
                         // 1.1. CHECK ERP APPROVAL REQUIREMENT
                         // ============================================
                         var shParameter = await _unitOfWork.ShParameters
-                            .AsQueryable()
-                            .Where(p => !p.IsDeleted)
+                            .Query()
                             .FirstOrDefaultAsync();
 
                         // ============================================
