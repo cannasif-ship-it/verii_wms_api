@@ -82,7 +82,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.ShImportLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.ShImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var nf = _localizationService.GetLocalizedString("ShImportLineNotFound");
@@ -166,7 +166,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var existing = await _unitOfWork.ShImportLines.GetByIdAsync(id);
+                var existing = await _unitOfWork.ShImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (existing == null)
                 {
                     var nf = _localizationService.GetLocalizedString("ShImportLineNotFound");
@@ -188,7 +188,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.ShImportLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.ShImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("ShImportLineNotFound");

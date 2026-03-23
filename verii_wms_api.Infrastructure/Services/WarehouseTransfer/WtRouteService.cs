@@ -80,7 +80,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.WtRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.WtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
 
                 if (entity == null || entity.IsDeleted)
                 {
@@ -134,7 +134,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.WtRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.WtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<WtRouteDto>.ErrorResult(_localizationService.GetLocalizedString("WtRouteNotFound"), _localizationService.GetLocalizedString("WtRouteNotFound"), 404);
@@ -159,7 +159,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var route = await _unitOfWork.WtRoutes.GetByIdAsync(id);
+                var route = await _unitOfWork.WtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (route == null || route.IsDeleted)
                 {
                     return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("WtRouteNotFound"), _localizationService.GetLocalizedString("WtRouteNotFound"), 404);

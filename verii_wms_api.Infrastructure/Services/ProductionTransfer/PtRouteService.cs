@@ -79,7 +79,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtRouteNotFound");
@@ -175,7 +175,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtRouteNotFound");
@@ -198,7 +198,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var route = await _unitOfWork.PtRoutes.GetByIdAsync(id);
+                var route = await _unitOfWork.PtRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (route == null || route.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtRouteNotFound");

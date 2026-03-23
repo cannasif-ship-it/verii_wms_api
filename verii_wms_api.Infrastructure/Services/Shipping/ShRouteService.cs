@@ -73,7 +73,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.ShRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.ShRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null) { var nf = _localizationService.GetLocalizedString("ShRouteNotFound"); return ApiResponse<ShRouteDto>.ErrorResult(nf, nf, 404); }
                 var dto = _mapper.Map<ShRouteDto>(entity);
                 return ApiResponse<ShRouteDto>.SuccessResult(dto, _localizationService.GetLocalizedString("ShRouteRetrievedSuccessfully"));
@@ -165,7 +165,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var existing = await _unitOfWork.ShRoutes.GetByIdAsync(id);
+                var existing = await _unitOfWork.ShRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (existing == null) { var nf = _localizationService.GetLocalizedString("ShRouteNotFound"); return ApiResponse<ShRouteDto>.ErrorResult(nf, nf, 404); }
                 var entity = _mapper.Map(updateDto, existing);
                 _unitOfWork.ShRoutes.Update(entity);
@@ -183,7 +183,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var route = await _unitOfWork.ShRoutes.GetByIdAsync(id);
+                var route = await _unitOfWork.ShRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (route == null || route.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("ShRouteNotFound");

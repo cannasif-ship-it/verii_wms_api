@@ -73,7 +73,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtParameters.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtParameters.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     return ApiResponse<PtParameterDto>.ErrorResult(_localizationService.GetLocalizedString("ParameterNotFound"), _localizationService.GetLocalizedString("ParameterNotFound"), 404);
@@ -109,7 +109,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtParameters.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtParameters.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     return ApiResponse<PtParameterDto>.ErrorResult(_localizationService.GetLocalizedString("ParameterNotFound"), _localizationService.GetLocalizedString("ParameterNotFound"), 404);

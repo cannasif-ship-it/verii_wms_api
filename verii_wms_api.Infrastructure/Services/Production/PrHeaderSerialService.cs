@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WMS_WEBAPI.DTOs;
 using WMS_WEBAPI.Interfaces;
 using WMS_WEBAPI.Models;
@@ -78,7 +79,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PrHeaderSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PrHeaderSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PrHeaderSerialDto>.ErrorResult(_localizationService.GetLocalizedString("PrHeaderSerialNotFound"), _localizationService.GetLocalizedString("PrHeaderSerialNotFound"), 404);
@@ -133,7 +134,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PrHeaderSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PrHeaderSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PrHeaderSerialDto>.ErrorResult(_localizationService.GetLocalizedString("PrHeaderSerialNotFound"), _localizationService.GetLocalizedString("PrHeaderSerialNotFound"), 404);
@@ -158,7 +159,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PrHeaderSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PrHeaderSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                      return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("PrHeaderSerialNotFound"), _localizationService.GetLocalizedString("PrHeaderSerialNotFound"), 404);

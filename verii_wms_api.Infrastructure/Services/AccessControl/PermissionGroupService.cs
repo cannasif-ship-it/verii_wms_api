@@ -61,14 +61,13 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PermissionGroups.AsQueryable()
-                    .AsNoTracking()
+                var entity = await _unitOfWork.PermissionGroups.Query()
                     .Include(x => x.CreatedByUser)
                     .Include(x => x.UpdatedByUser)
                     .Include(x => x.DeletedByUser)
                     .Include(x => x.GroupPermissions.Where(gp => !gp.IsDeleted))
                     .ThenInclude(x => x.PermissionDefinition)
-                    .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (entity == null)
                 {
@@ -142,7 +141,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PermissionGroups.GetByIdAsync(id);
+                var entity = await _unitOfWork.PermissionGroups.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     return ApiResponse<PermissionGroupDto>.ErrorResult(
@@ -207,7 +206,7 @@ namespace WMS_WEBAPI.Services
 
         public async Task<ApiResponse<PermissionGroupDto>> SetPermissionsAsync(long id, SetPermissionGroupPermissionsDto dto)
         {
-            var group = await _unitOfWork.PermissionGroups.GetByIdAsync(id);
+            var group = await _unitOfWork.PermissionGroups.Query().FirstOrDefaultAsync(x => x.Id == id);
             if (group != null && group.IsSystemAdmin)
             {
                 return ApiResponse<PermissionGroupDto>.ErrorResult(
@@ -229,7 +228,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PermissionGroups.GetByIdAsync(id);
+                var entity = await _unitOfWork.PermissionGroups.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     return ApiResponse<bool>.ErrorResult(

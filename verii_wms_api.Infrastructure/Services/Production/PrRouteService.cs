@@ -79,7 +79,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PrRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.PrRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PrRouteDto>.ErrorResult(_localizationService.GetLocalizedString("PrRouteNotFound"), _localizationService.GetLocalizedString("PrRouteNotFound"), 404);
@@ -173,7 +173,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PrRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.PrRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PrRouteDto>.ErrorResult(_localizationService.GetLocalizedString("PrRouteNotFound"), _localizationService.GetLocalizedString("PrRouteNotFound"), 404);
@@ -195,7 +195,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var route = await _unitOfWork.PrRoutes.GetByIdAsync(id);
+                var route = await _unitOfWork.PrRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (route == null || route.IsDeleted)
                 {
                     return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("PrRouteNotFound"), _localizationService.GetLocalizedString("PrRouteNotFound"), 404);

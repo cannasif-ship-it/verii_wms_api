@@ -105,7 +105,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var serialLine = await _unitOfWork.GrLineSerials.GetByIdAsync(id);
+                var serialLine = await _unitOfWork.GrLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (serialLine == null)
                 {
                     var nf = _localizationService.GetLocalizedString("GrImportSerialLineNotFound");
@@ -163,7 +163,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var serialLine = await _unitOfWork.GrLineSerials.GetByIdAsync(id);
+                var serialLine = await _unitOfWork.GrLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (serialLine == null)
                 {
                     var nf = _localizationService.GetLocalizedString("GrImportSerialLineNotFound");
@@ -195,7 +195,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var serialLine = await _unitOfWork.GrLineSerials.GetByIdAsync(id);
+                var serialLine = await _unitOfWork.GrLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (serialLine == null)
                 {
                     var nf = _localizationService.GetLocalizedString("GrImportSerialLineNotFound");

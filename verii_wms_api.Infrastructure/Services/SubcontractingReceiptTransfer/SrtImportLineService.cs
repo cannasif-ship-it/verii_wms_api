@@ -88,7 +88,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtImportLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.SrtImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("SrtImportLineNotFound");
@@ -161,7 +161,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtImportLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.SrtImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("SrtImportLineNotFound");
@@ -183,7 +183,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SrtImportLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.SrtImportLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("SrtImportLineNotFound");

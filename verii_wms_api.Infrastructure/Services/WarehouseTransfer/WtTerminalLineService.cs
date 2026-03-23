@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WMS_WEBAPI.DTOs;
 using WMS_WEBAPI.Interfaces;
@@ -81,7 +82,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = await _unitOfWork.WtTerminalLines
-                    .GetByIdAsync(id);
+                    .Query().FirstOrDefaultAsync(x => x.Id == id);
 
                 if (entity == null || entity.IsDeleted)
                 {
@@ -168,7 +169,7 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var entity = await _unitOfWork.WtTerminalLines
-                    .GetByIdAsync(id);
+                    .Query().FirstOrDefaultAsync(x => x.Id == id);
 
                 if (entity == null || entity.IsDeleted)
                 {

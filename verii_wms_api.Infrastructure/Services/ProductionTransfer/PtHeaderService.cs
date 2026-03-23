@@ -103,7 +103,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtHeaderNotFound");
@@ -215,7 +215,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtHeaderNotFound");
@@ -264,7 +264,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtHeaders.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtHeaders.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var notFound = _localizationService.GetLocalizedString("PtHeaderNotFound");

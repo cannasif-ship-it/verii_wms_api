@@ -74,7 +74,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.MobileUserGroupMatches.GetByIdAsync(id);
+                var entity = await _unitOfWork.MobileUserGroupMatches.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var message = _localizationService.GetLocalizedString("MobileUserGroupMatchNotFound");
@@ -145,7 +145,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.MobileUserGroupMatches.GetByIdAsync(id);
+                var entity = await _unitOfWork.MobileUserGroupMatches.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var message = _localizationService.GetLocalizedString("MobileUserGroupMatchNotFound");

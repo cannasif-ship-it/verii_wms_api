@@ -74,7 +74,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.MobilePageGroups.GetByIdAsync(id);
+                var entity = await _unitOfWork.MobilePageGroups.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var message = _localizationService.GetLocalizedString("MobilePageGroupNotFound");
@@ -130,7 +130,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.MobilePageGroups.GetByIdAsync(id);
+                var entity = await _unitOfWork.MobilePageGroups.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     var message = _localizationService.GetLocalizedString("MobilePageGroupNotFound");

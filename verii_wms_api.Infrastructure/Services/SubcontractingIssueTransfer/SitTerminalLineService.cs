@@ -79,7 +79,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SitTerminalLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.SitTerminalLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<SitTerminalLineDto>.ErrorResult(_localizationService.GetLocalizedString("SitTerminalLineNotFound"), _localizationService.GetLocalizedString("SitTerminalLineNotFound"), 404);
@@ -144,7 +144,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SitTerminalLines.GetByIdAsync(id);
+                var entity = await _unitOfWork.SitTerminalLines.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<SitTerminalLineDto>.ErrorResult(_localizationService.GetLocalizedString("SitTerminalLineNotFound"), _localizationService.GetLocalizedString("SitTerminalLineNotFound"), 404);

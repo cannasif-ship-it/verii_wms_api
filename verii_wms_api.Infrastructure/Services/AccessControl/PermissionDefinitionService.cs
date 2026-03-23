@@ -59,12 +59,11 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PermissionDefinitions.AsQueryable()
-                    .AsNoTracking()
+                var entity = await _unitOfWork.PermissionDefinitions.Query()
                     .Include(x => x.CreatedByUser)
                     .Include(x => x.UpdatedByUser)
                     .Include(x => x.DeletedByUser)
-                    .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (entity == null)
                 {
@@ -129,7 +128,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PermissionDefinitions.GetByIdAsync(id);
+                var entity = await _unitOfWork.PermissionDefinitions.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null)
                 {
                     return ApiResponse<PermissionDefinitionDto>.ErrorResult(

@@ -79,7 +79,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SitRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.SitRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<SitRouteDto>.ErrorResult(_localizationService.GetLocalizedString("SitRouteNotFound"), _localizationService.GetLocalizedString("SitRouteNotFound"), 404);
@@ -177,7 +177,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.SitRoutes.GetByIdAsync(id);
+                var entity = await _unitOfWork.SitRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("SitRouteNotFound");
@@ -200,7 +200,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var route = await _unitOfWork.SitRoutes.GetByIdAsync(id);
+                var route = await _unitOfWork.SitRoutes.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (route == null || route.IsDeleted)
                 {
                     var nf = _localizationService.GetLocalizedString("SitRouteNotFound");

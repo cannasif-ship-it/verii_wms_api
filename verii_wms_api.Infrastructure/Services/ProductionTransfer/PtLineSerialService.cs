@@ -80,7 +80,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtLineSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PtLineSerialDto>.ErrorResult(_localizationService.GetLocalizedString("PtLineSerialNotFound"), _localizationService.GetLocalizedString("PtLineSerialNotFound"), 404);
@@ -135,7 +135,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtLineSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<PtLineSerialDto>.ErrorResult(_localizationService.GetLocalizedString("PtLineSerialNotFound"), _localizationService.GetLocalizedString("PtLineSerialNotFound"), 404);
@@ -165,7 +165,7 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var entity = await _unitOfWork.PtLineSerials.GetByIdAsync(id);
+                var entity = await _unitOfWork.PtLineSerials.Query().FirstOrDefaultAsync(x => x.Id == id);
                 if (entity == null || entity.IsDeleted)
                 {
                     return ApiResponse<bool>.ErrorResult(_localizationService.GetLocalizedString("PtLineSerialNotFound"), _localizationService.GetLocalizedString("PtLineSerialNotFound"), 404);
