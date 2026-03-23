@@ -75,7 +75,8 @@ namespace WMS_WEBAPI.Services.Jobs
                 {
                     var stock = await _db.Stocks
                         .IgnoreQueryFilters()
-                        .FirstOrDefaultAsync(x => x.ErpStockCode == code);
+                        .Where(x => x.ErpStockCode == code)
+                            .FirstOrDefaultAsync();
 
                     var stockName = string.IsNullOrWhiteSpace(erpStock.STOK_ADI) ? code : erpStock.STOK_ADI!.Trim();
                     var unit = EmptyToNull(erpStock.OLCU_BR1);

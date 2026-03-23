@@ -286,7 +286,8 @@ namespace WMS_WEBAPI.Services
                 {
                     var validCount = await _unitOfWork.PermissionDefinitions.AsQueryable()
                         .AsNoTracking()
-                        .CountAsync(x => !x.IsDeleted && distinctPermissionIds.Contains(x.Id));
+                        .Where(x => !x.IsDeleted && distinctPermissionIds.Contains(x.Id))
+                            .CountAsync();
 
                     if (validCount != distinctPermissionIds.Count)
                     {

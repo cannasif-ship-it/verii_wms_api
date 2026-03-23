@@ -55,7 +55,8 @@ namespace WMS_WEBAPI.Repositories
                 .Include(e => e.UpdatedByUser)
                 .Include(e => e.DeletedByUser)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
+                .Where(e => e.Id == id && !e.IsDeleted)
+                            .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -161,7 +162,8 @@ namespace WMS_WEBAPI.Repositories
 
         public async Task<int> CountAsync()
         {
-            return await _dbSet.CountAsync(e => !e.IsDeleted);
+            return await _dbSet.Where(e => !e.IsDeleted)
+                            .CountAsync();
         }
 
         public IQueryable<T> AsQueryable()

@@ -196,7 +196,8 @@ namespace WMS_WEBAPI.Services
 
                 var currentSerialCount = await _unitOfWork.ShLineSerials
                     .AsQueryable()
-                    .CountAsync(ls => !ls.IsDeleted && ls.LineId == entity.LineId);
+                    .Where(ls => !ls.IsDeleted && ls.LineId == entity.LineId)
+                            .CountAsync();
                 var remainingSerialCount = currentSerialCount - 1;
 
                 var hasImportLines = await _unitOfWork.ShImportLines
@@ -212,7 +213,8 @@ namespace WMS_WEBAPI.Services
                     var headerId = lineEntity.HeaderId;
                     var currentLinesUnderHeader = await _unitOfWork.ShLines
                         .AsQueryable()
-                        .CountAsync(l => !l.IsDeleted && l.HeaderId == headerId);
+                        .Where(l => !l.IsDeleted && l.HeaderId == headerId)
+                            .CountAsync();
                     var remainingLinesUnderHeader = currentLinesUnderHeader - 1;
                     if (remainingLinesUnderHeader == 0)
                     {

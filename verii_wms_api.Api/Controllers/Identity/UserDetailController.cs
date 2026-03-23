@@ -135,7 +135,8 @@ namespace WMS_WEBAPI.Controllers
             var existingDetail = await _unitOfWork.UserDetails
                 .AsQueryable()
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.UserId == userIdLong && !x.IsDeleted);
+                .Where(x => x.UserId == userIdLong && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
             if (existingDetail == null)
             {
@@ -285,12 +286,14 @@ namespace WMS_WEBAPI.Controllers
                 // Get active UserDetail
                 var activeDetail = await _unitOfWork.UserDetails
                     .AsQueryable()
-                    .FirstOrDefaultAsync(x => x.UserId == userId && !x.IsDeleted);
+                    .Where(x => x.UserId == userId && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 // Test the exact query used by GetByUserIdAsync
                 var queryResult = await _unitOfWork.UserDetails
                     .AsQueryable()
-                    .FirstOrDefaultAsync(x => x.UserId == userId && !x.IsDeleted);
+                    .Where(x => x.UserId == userId && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 var testResult = new
                 {
@@ -384,7 +387,8 @@ namespace WMS_WEBAPI.Controllers
                 // Get non-deleted user detail
                 var activeDetail = await _unitOfWork.UserDetails
                     .AsQueryable()
-                    .FirstOrDefaultAsync(x => x.UserId == userIdLong && !x.IsDeleted);
+                    .Where(x => x.UserId == userIdLong && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 var debugInfo = new
                 {

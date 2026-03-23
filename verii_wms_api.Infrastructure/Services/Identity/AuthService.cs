@@ -41,7 +41,8 @@ namespace WMS_WEBAPI.Services
             try
             {
                 var query = _unitOfWork.Users.AsQueryable().Include(u => u.RoleNavigation);
-                var user = await query.FirstOrDefaultAsync(u => u.Username == username);
+                var user = await query.Where(u => u.Username == username)
+                            .FirstOrDefaultAsync();
                 
                 if (user == null)
                 {
@@ -213,7 +214,8 @@ namespace WMS_WEBAPI.Services
         {
             try
             {
-                var user = await _unitOfWork.Users.AsQueryable().FirstOrDefaultAsync(u => u.Email == request.Email);
+                var user = await _unitOfWork.Users.AsQueryable().Where(u => u.Email == request.Email)
+                            .FirstOrDefaultAsync();
                 var token = Guid.NewGuid().ToString("N");
                 var tokenHash = ComputeSha256Hash(token);
                 var expiresAt = DateTime.UtcNow.AddMinutes(30);

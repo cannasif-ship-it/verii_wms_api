@@ -28,7 +28,8 @@ namespace WMS_WEBAPI.Hubs
             {
                 // Mevcut aktif oturumu kontrol et
                 var activeSession = await _context.Set<UserSession>()
-                    .FirstOrDefaultAsync(us => us.UserId == long.Parse(userId) && us.RevokedAt == null);
+                    .Where(us => us.UserId == long.Parse(userId) && us.RevokedAt == null)
+                            .FirstOrDefaultAsync();
 
                 if (activeSession != null)
                 {

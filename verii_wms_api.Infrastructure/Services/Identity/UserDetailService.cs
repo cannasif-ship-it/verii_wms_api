@@ -56,7 +56,8 @@ namespace WMS_WEBAPI.Services
                 var entity = await _unitOfWork.UserDetails
                     .AsQueryable()
                     .AsNoTracking()  // Add AsNoTracking to prevent tracking conflicts
-                    .FirstOrDefaultAsync(x => x.UserId == userId && !x.IsDeleted);
+                    .Where(x => x.UserId == userId && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 if (entity == null)
                 {
@@ -150,7 +151,8 @@ namespace WMS_WEBAPI.Services
                 // Check if user detail already exists
                 var existingDetail = await _unitOfWork.UserDetails
                     .AsQueryable()
-                    .FirstOrDefaultAsync(x => x.UserId == dto.UserId && !x.IsDeleted);
+                    .Where(x => x.UserId == dto.UserId && !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 if (existingDetail != null)
                 {

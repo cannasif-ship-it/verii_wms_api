@@ -23,6 +23,7 @@ This project uses `Query(bool tracking = false, bool ignoreQueryFilters = false)
 - Avoid `FindAsync(...)` for normal read flows when the same logic can be expressed with `Query().Where(...)`.
 - Avoid `GetByIdAsync(...)` inside service methods for read flows; prefer `Query().Where(x => x.Id == id).FirstOrDefaultAsync()` so the tracking/filter intent is visible.
 - Avoid passing predicates directly into terminal operators such as `FirstOrDefaultAsync(...)`, `SingleOrDefaultAsync(...)`, or `AnyAsync(...)`.
+- Avoid passing predicates directly into `CountAsync(...)`, `FirstAsync(...)`, `SingleAsync(...)`, and similar terminal operators.
 - Prefer keeping the filter in `Where(...)` and the terminal operator argument-free so the query chain reads consistently.
 
 ## Practical patterns
@@ -39,6 +40,13 @@ var entity = await _unitOfWork.WtHeaders.Query()
 var exists = await _unitOfWork.WtHeaders.Query()
     .Where(x => x.DocumentNo == documentNo)
     .AnyAsync();
+```
+
+### Count query
+```csharp
+var count = await _unitOfWork.WtHeaders.Query()
+    .Where(x => x.IsCompleted)
+    .CountAsync();
 ```
 
 ### Single row expectation
@@ -70,6 +78,7 @@ This avoids optional-argument issues in some LINQ expression scenarios.
 
 ## Team rule of thumb
 - Read path: `Query().Where(...).FirstOrDefaultAsync()/ToListAsync()/AnyAsync()`
+- Read path: `Query().Where(...).FirstOrDefaultAsync()/ToListAsync()/AnyAsync()/CountAsync()`
 - Write path: `Query(tracking: true).Where(...).FirstOrDefaultAsync()`
 - Deleted data inspection: `Query(ignoreQueryFilters: true).Where(...).FirstOrDefaultAsync()`
 - Keep predicates in `Where(...)`, not inside terminal operators.

@@ -678,11 +678,12 @@ namespace WMS_WEBAPI.Services
 
                         WtImportLine? importLine = await _unitOfWork.WtImportLines
                             .AsQueryable()
-                            .FirstOrDefaultAsync(il => il.HeaderId == request.HeaderId
+                            .Where(il => il.HeaderId == request.HeaderId
                                 && il.LineId == selectedLineId.Value
                                 && ((il.StockCode ?? "").Trim() == reqStock)
                                 && ((il.YapKod ?? "").Trim() == reqYap)
-                                && !il.IsDeleted);
+                                && !il.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                         if (importLine == null)
                         {

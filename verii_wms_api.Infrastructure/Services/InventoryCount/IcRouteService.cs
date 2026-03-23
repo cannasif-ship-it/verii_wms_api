@@ -169,7 +169,8 @@ namespace WMS_WEBAPI.Services
                 // Bu ImportLine'a bağlı, silinmemiş ve bu route dışında başka route var mı kontrol et
                 var remainingRoutesCount = await _unitOfWork.IcRoutes
                     .AsQueryable()
-                    .CountAsync(r => !r.IsDeleted && r.ImportLineId == importLineId && r.Id != id);
+                    .Where(r => !r.IsDeleted && r.ImportLineId == importLineId && r.Id != id)
+                            .CountAsync();
 
                 // Eğer başka route yoksa (count == 0), bu son route demektir, ImportLine'ı da silmeliyiz
                 var shouldDeleteImportLine = remainingRoutesCount == 0;

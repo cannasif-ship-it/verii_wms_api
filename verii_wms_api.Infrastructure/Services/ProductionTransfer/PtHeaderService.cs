@@ -489,7 +489,8 @@ namespace WMS_WEBAPI.Services
                 // Tracking ile yükle (navigation property'ler yüklenmeyecek)
                 var entity = await _unitOfWork.PtHeaders
                     .AsQueryable()
-                    .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
+                    .Where(e => e.Id == id && !e.IsDeleted)
+                            .FirstOrDefaultAsync();
                     
                 if (entity == null)
                 {

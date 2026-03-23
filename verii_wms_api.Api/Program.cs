@@ -427,9 +427,10 @@ builder.Services.AddAuthentication(options =>
 
             // Session kontrolü: Token hash ile eşleşen aktif session ara
             var session = await db.UserSessions
-                .FirstOrDefaultAsync(s => s.UserId.ToString() == userId 
+                .Where(s => s.UserId.ToString() == userId 
                     && s.RevokedAt == null 
-                    && (tokenHash != null && s.Token == tokenHash));
+                    && (tokenHash != null && s.Token == tokenHash))
+                            .FirstOrDefaultAsync();
             
             if (session == null)
             {

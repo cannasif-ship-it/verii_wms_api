@@ -745,11 +745,12 @@ namespace WMS_WEBAPI.Services
 
                         GrImportLine? importLine = await _unitOfWork.GrImportLines
                             .AsQueryable()
-                            .FirstOrDefaultAsync(il => il.HeaderId == request.HeaderId
+                            .Where(il => il.HeaderId == request.HeaderId
                                 && il.LineId == selectedLineId.Value
                                 && ((il.StockCode ?? "").Trim() == reqStock)
                                 && ((il.YapKod ?? "").Trim() == reqYap)
-                                && !il.IsDeleted);
+                                && !il.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                         if (importLine == null)
                         {

@@ -68,7 +68,8 @@ namespace WMS_WEBAPI.Services
                 var entity = await _unitOfWork.SmtpSettings
                     .AsQueryable()
                     .OrderBy(x => x.Id)
-                    .FirstOrDefaultAsync(x => !x.IsDeleted);
+                    .Where(x => !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
                 if (entity == null)
                 {
@@ -176,7 +177,8 @@ namespace WMS_WEBAPI.Services
             var entity = await _unitOfWork.SmtpSettings
                 .AsQueryable()
                 .OrderBy(x => x.Id)
-                .FirstOrDefaultAsync(x => !x.IsDeleted);
+                .Where(x => !x.IsDeleted)
+                            .FirstOrDefaultAsync();
 
             if (entity != null)
             {

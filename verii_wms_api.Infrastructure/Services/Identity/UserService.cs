@@ -337,7 +337,8 @@ namespace WMS_WEBAPI.Services
                 }
 
                 var validCount = await _unitOfWork.PermissionGroups.Query()
-                    .CountAsync(x => distinctGroupIds.Contains(x.Id));
+                    .Where(x => distinctGroupIds.Contains(x.Id))
+                            .CountAsync();
 
                 if (validCount != distinctGroupIds.Count)
                 {

@@ -182,7 +182,8 @@ namespace WMS_WEBAPI.Services
                 // Bu ImportLine'a bağlı, silinmemiş ve bu route dışında başka route var mı kontrol et
                 var remainingRoutesCount = await _unitOfWork.WtRoutes
                     .AsQueryable()
-                    .CountAsync(r => !r.IsDeleted && r.ImportLineId == importLineId && r.Id != id);
+                    .Where(r => !r.IsDeleted && r.ImportLineId == importLineId && r.Id != id)
+                            .CountAsync();
 
                     var packageInfoList = await (
                         from pl in _unitOfWork.PLines.AsQueryable()

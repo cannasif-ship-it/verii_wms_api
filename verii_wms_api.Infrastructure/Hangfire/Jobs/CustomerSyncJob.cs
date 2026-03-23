@@ -76,7 +76,8 @@ namespace WMS_WEBAPI.Services.Jobs
                 {
                     var customer = await _db.Customers
                         .IgnoreQueryFilters()
-                        .FirstOrDefaultAsync(x => x.CustomerCode == code);
+                        .Where(x => x.CustomerCode == code)
+                            .FirstOrDefaultAsync();
 
                     var customerName = string.IsNullOrWhiteSpace(erpCustomer.CARI_ISIM) ? code : erpCustomer.CARI_ISIM!.Trim();
                     var taxOffice = EmptyToNull(erpCustomer.VERGI_DAIRESI);
