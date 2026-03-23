@@ -9,6 +9,7 @@ namespace WMS_WEBAPI.Repositories
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
+        IQueryable<T> Query(bool tracking = false, bool ignoreQueryFilters = false);
         Task<T?> GetByIdAsync(long id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);

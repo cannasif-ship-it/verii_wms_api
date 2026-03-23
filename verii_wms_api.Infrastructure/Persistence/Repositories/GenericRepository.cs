@@ -30,6 +30,23 @@ namespace WMS_WEBAPI.Repositories
                               ?? httpUser?.FindFirst("UserId")?.Value;
             return long.TryParse(userIdClaim, out var userId) ? userId : null;
         }
+
+        public IQueryable<T> Query(bool tracking = false, bool ignoreQueryFilters = false)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (!ignoreQueryFilters)
+            {
+                query = query.Where(e => !e.IsDeleted);
+            }
+
+            if (!tracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return query;
+        }
         
         public async Task<T?> GetByIdAsync(long id)
         {
@@ -148,7 +165,7 @@ namespace WMS_WEBAPI.Repositories
 
         public IQueryable<T> AsQueryable()
         {
-            return _dbSet.Where(e => !e.IsDeleted);
+            return Query();
         }
     }
 }
